@@ -315,11 +315,12 @@ lil-header.expanded .nav-menu__inner {
   line-height: 115%;
 }
 
+.page-hero__eyebrow {
+  margin-bottom: 24px;
+}
+
 .page-hero {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-bottom: 80px;
+  padding-bottom: 72px;
   border-bottom: 1px solid #121212;
   margin-bottom: 80px;
   padding-top: 120px;
@@ -329,7 +330,7 @@ lil-header.expanded .nav-menu__inner {
   font-size: clamp(52px, 12vw, 140px);
   font-weight: 500;
   line-height: 100%;
-  padding-bottom: 12px;
+  padding-bottom: 36px;
 }
 
 .page-hero__subtitle {
@@ -346,6 +347,14 @@ lil-header.expanded .nav-menu__inner {
 
 .page-hero.simple .page-hero__subtitle {
   max-width: 980px;
+}
+
+
+.page-hero.events {
+  padding-bottom: 0;
+}
+.page-hero.events .page-hero__title {
+  padding-bottom: 72px;
 }
 
 .body-text, .expandable__content {
@@ -475,6 +484,14 @@ html.is-animating .transition-main {
   
   .page-hero__subtitle {
     font-size: 28px;
+  }
+
+  .page-hero.events {
+    padding-bottom: 0;
+  }
+
+  .page-hero.events .page-hero__title {
+    padding-bottom: 36px;
   }
 
   .body-text, .expandable__content {
