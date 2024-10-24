@@ -322,7 +322,7 @@ lil-header.expanded .nav-menu__inner {
 .page-hero {
   padding-bottom: 72px;
   border-bottom: 1px solid #121212;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
   padding-top: 120px;
 }
 
@@ -341,7 +341,7 @@ lil-header.expanded .nav-menu__inner {
 
 .page-hero.simple {
   margin-bottom: 0;
-  padding-bottom: 80px;
+  padding-bottom: 72px;
   border-bottom: 0;
 }
 
@@ -349,10 +349,19 @@ lil-header.expanded .nav-menu__inner {
   max-width: 980px;
 }
 
+.page-hero.project {
+  padding-bottom: 60px;
+}
+
+.page-hero.project .page-hero__title {
+  margin-left: -8px;
+  padding-bottom: 16px;
+}
 
 .page-hero.events {
   padding-bottom: 0;
 }
+
 .page-hero.events .page-hero__title {
   padding-bottom: 72px;
 }
@@ -492,6 +501,14 @@ html.is-animating .transition-main {
 
   .page-hero.events .page-hero__title {
     padding-bottom: 36px;
+  }
+
+  .page-hero.project {
+    padding-bottom: 40px;
+  }
+
+  .page-hero.project .page-hero__title {
+    margin-left: -4px;
   }
 
   .body-text, .expandable__content {

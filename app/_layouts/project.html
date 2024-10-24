@@ -3,21 +3,21 @@ layout: default
 ---
 
 <section class="container">
-  <div class="page-hero">
+  <div class="page-hero project">
     <nav aria-label="breadcrumbs" class="page-hero__eyebrow">
-      <a href="{{ site.baseurl }}/our-work/" class="interactive-link dark">Our Work > {{ page.category }}</a>
+      <a href="{{ site.baseurl }}/our-work/" class="interactive-link dark reverse">Our Work</a>
     </nav>
     <h1 class="page-hero__title">{{ page.title }}</h1>
     <h2 class="page-hero__subtitle">{{page.what_does_it_do}}</h2>
   </div>
 </section>
 
-<div class="flex flex-col gap-40 md:gap-80 items-start">
+<div class="flex flex-col gap-48 md:gap-60 items-start">
 
-  <section class="container flex flex-col gap-120">
-    <div class="flex flex-col md:grid md:grid-cols-3 gap-24 md:gap-40">
+  <section class="container flex flex-col gap-36 md:gap-72">
+    <div class="flex flex-col xl:grid xl:grid-cols-3 xl:gap-48">
       <h2 class="h2">Where can I find {{page.title}}?</h2>
-      <div class="md:col-span-2 body-text flex flex-col gap-32 pt-20 max-w-[700px]">
+      <div class="md:col-span-2 body-text flex flex-col gap-12 pt-20 xl:max-w-[700px]">
         {% if page.project_website %}
           {% include arrow-link.html label=page.project_website href=page.project_website target="_blank" %}
         {% endif %}
@@ -26,16 +26,10 @@ layout: default
         {% endif %}
       </div>
     </div>
-    <div class="flex flex-col md:grid md:grid-cols-3 gap-24 md:gap-40">
-      <h2 class="h2">What does {{page.title}} do?</h2>
-      <div class="md:col-span-2 body-text flex flex-col gap-32 pt-20 max-w-[700px]">
-        {{ page.what_does_it_do | markdownify }}
-      </div>
-    </div>
     {% if page.why_does_it_exist %}
-      <div class="flex flex-col md:grid md:grid-cols-3 gap-24 md:gap-40">
+      <div class="flex flex-col xl:grid xl:grid-cols-3 xl:gap-48">
         <h2 class="h2">Why does {{page.title}} exist?</h2>
-        <div class="md:col-span-2 body-text flex flex-col gap-32 pt-20 max-w-[700px]">
+        <div class="md:col-span-2 body-text flex flex-col gap-20 pt-20 xl:max-w-[700px]">
           {{ page.why_does_it_exist | markdownify }}
         </div>
       </div>
@@ -48,11 +42,11 @@ layout: default
 
   {% assign news = site.data.news | where: "project", page.slug %}
   {% if news.size > 0 %}
-    <section class="container flex flex-col items-start gap-40">
+    <section class="container flex flex-col items-start gap-12">
       <h2 class="h2">News</h2>
       <div class="flex flex-col items-start w-full">
         {% for article in news %}
-          <div class="body-text w-full py-32 {% unless forloop.first %}border-t-1{% endunless %} flex grid grid-cols-12 gap-24 relative">
+          <div class="body-text w-full py-24 md:py-36 {% unless forloop.first %}border-t-1{% endunless %} flex grid grid-cols-12 gap-24 relative">
             <!-- format date as 02.12.24 -->
             <span class="label col-span-3">
               <span class="align-middle">{{ article.date | date: "%m/%d/%y" }}</span>
@@ -70,11 +64,11 @@ layout: default
   {% endif %}
   
   {% if page.who_contributed %}
-    <section class="container pb-40">
-      <div class="flex flex-col md:grid md:grid-cols-3 gap-24 md:gap-40">
+    <section class="container">
+      <div class="flex flex-col lg:grid lg:grid-cols-3 gap-24 lg:gap-36">
         <h2 class="h2">Project Contributors</h2>
 
-        <div class="slice-body additional-contributors md:col-span-2 md:pt-20 body-text max-w-[750px]">
+        <div class="slice-body additional-contributors lg:col-span-2 lg:pt-20 body-text lg:max-w-[750px]">
           {% for name in page.who_contributed %}
             {% assign person = site.data.people[name] %}
             <strong class="name">{{ person.name }}</strong>
