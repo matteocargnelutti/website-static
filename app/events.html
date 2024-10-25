@@ -80,7 +80,7 @@ layout: default
           {% endcapture %}
           <div class="body-text w-full {% if forloop.first %} pt-24 pb-36 tbl:py-36 {% elsif forloop.last %} pt-24 tbl:pt-36 {% else %} py-24 tbl:py-36 {% endif %}{% unless forloop.first %}border-t-1 {% endunless %} border-black flex flex-col  md:grid md:grid-cols-12 gap-8 md:gap-24 relative">
             <span class="label col-span-3">{{ event.date | date: "%m/%d/%y" }}</span>
-            <span class="col-span-6">{% include arrow-link-inline.html label=linkLabel href=event.url %}</span>
+            <span class="col-span-8">{% include arrow-link-inline.html label=linkLabel href=event.url %}</span>
           </div>
         {% endfor %}
       </div>
