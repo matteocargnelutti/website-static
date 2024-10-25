@@ -552,7 +552,7 @@ html.is-animating .transition-main {
   }
 
   .page-hero__title {
-    padding-bottom: 0;
+    padding-bottom: 24px;
   }
 
 /*  .interactive-link {
