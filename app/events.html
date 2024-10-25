@@ -5,17 +5,17 @@ layout: default
 ---
 
 <section class="container">
-  <div class="page-hero">
+  <div class="page-hero events">
     <h1 class="page-hero__title">{{ page.title }}</h1>
   </div>
 </section>
 
-<div class="flex flex-col gap-56">
+<div>
 
   {% assign next_event = site.events | where_exp: 'item','item.date >= site.time' | sort: 'date' | first %}
   {% if next_event %}
     {% if next_event.banner %}
-      <section class="container">
+      <section class="container mb-30 tbl:mb-60">
         <div class="w-full relative">
           <figure>
             <picture>
@@ -34,18 +34,16 @@ layout: default
       {% endif %}
 
       <section class="container">
-        <div class="flex flex-col gap-50 md:gap-120">
-          <div class="flex flex-col items-start gap-20">
-            <div class="label">Next Event</div>
-            <div class="flex flex-col md:grid md:grid-cols-3 gap-32 pb-60">
-              <h1 class="h2">{{ next_event.title }} - {{ next_event.date_informal }}</h1>
-              <div class="md:col-span-2 body-text max-w-[700px] pt-10 flex flex-col items-start gap-50">
-                {{ next_event.excerpt }}
-                {% capture linkLabel %}
-                  <span class="sr-only">{{ next_event.title }},</span> More Info
-                {% endcapture %}
-                {% include arrow-link.html label=linkLabel href=next_event.url reverse=true %}
-              </div>
+        <div class="flex flex-col items-start gap-12">
+          <div class="label">Next Event</div>
+          <div class="flex flex-col md:grid md:grid-cols-3 md:gap-36 pb-36 md:pb-48">
+            <h1 class="h2">{{ next_event.title }} - {{ next_event.date_informal }}</h1>
+            <div class="md:col-span-2 body-text md:max-w-[700px] pt-20 flex flex-col items-start gap-20">
+              {{ next_event.excerpt }}
+              {% capture linkLabel %}
+                <span class="sr-only">{{ next_event.title }},</span> More Info
+              {% endcapture %}
+              {% include arrow-link.html label=linkLabel href=next_event.url reverse=true %}
             </div>
           </div>
         </div>
@@ -54,20 +52,17 @@ layout: default
 
   {% assign upcoming_events = site.events | where_exp: 'item','item.date > site.time' | sort: 'date' | reverse %}
   {% if upcoming_events.size > 0 %}
-    <section class="container flex flex-col items-start gap-10">
+    <section class="container mb-36 md:mb-60">
       <h2 class="h2">Upcoming</h2>
       <div class="flex flex-col items-start w-full">
 
         {% for event in upcoming_events %}
           {% capture linkLabel %}
-            <span class="sr-only"> {{ event.title }},</span> More Info
+            <strong>{{event.title}}</strong> - {{event.short_description}}
           {% endcapture %}
-          <div class="body-text w-full py-32 border-t-1 border-black first-of-type:border-t-0 last-of-type:border-b-1 flex flex-col  md:grid md:grid-cols-12 gap-8 md:gap-24 relative md:items-center">
+          <div class="body-text w-full {% if forloop.first %} py-24 tbl:py-36 {% else %}py-36 {% endif %} border-black {% unless forloop.first %}border-t-1{% endunless %} {% if forloop.last %}border-b-1{% endif %} flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-24 relative">
             <span class="label col-span-3">{{ event.date | date: "%m/%d/%y" }}</span>
-            <span class="col-span-6"><strong>{{event.title}}</strong> - {{event.short_description}}</span>
-            <span class="col-span-3 flex md:justify-end pt-20 md:pt-0">
-              {% include arrow-link.html label=linkLabel href=event.url target=target card_link="true" %}
-            </span>
+            <span class="col-span-6">{% include arrow-link-inline.html label=linkLabel href=event.url %}</span>
           </div>
         {% endfor %}
       </div>
@@ -76,19 +71,16 @@ layout: default
 
   {% assign past_events = site.events | where_exp: 'item','item.date < site.time' | sort: 'date' | reverse %}
   {% if past_events.size > 0 %}
-    <section class="container flex flex-col items-start gap-10">
+    <section class="container">
       <h2 class="h2">Past</h2>
       <div class="flex flex-col items-start w-full">
         {% for event in past_events %}
           {% capture linkLabel %}
-            <span class="sr-only"> {{ event.title }},</span> More Info
+            <strong>{{event.title}}</strong> - {{event.short_description}}
           {% endcapture %}
-          <div class="body-text w-full py-32 {% unless forloop.first %}border-t-1 {% endunless %} border-black flex flex-col  md:grid md:grid-cols-12 gap-8 md:gap-24 relative md:items-center">
+          <div class="body-text w-full {% if forloop.first %} pt-24 pb-36 tbl:py-36 {% elsif forloop.last %} pt-24 tbl:pt-36 {% else %} py-24 tbl:py-36 {% endif %}{% unless forloop.first %}border-t-1 {% endunless %} border-black flex flex-col  md:grid md:grid-cols-12 gap-8 md:gap-24 relative">
             <span class="label col-span-3">{{ event.date | date: "%m/%d/%y" }}</span>
-            <span class="col-span-6"><strong>{{event.title}}</strong> - {{event.short_description}}</span>
-            <span class="col-span-3 flex md:justify-end pt-20 md:pt-0">
-              {% include arrow-link.html label=linkLabel href=event.url target=target card_link="true" %}
-            </span>
+            <span class="col-span-8">{% include arrow-link-inline.html label=linkLabel href=event.url %}</span>
           </div>
         {% endfor %}
       </div>

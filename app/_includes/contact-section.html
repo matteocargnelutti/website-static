@@ -5,7 +5,10 @@
       <div class="flex flex-col gap-28">
         <div class="label-value">
           <h3 class="label">Email</h3>
-          <a href="mailto:{{ site.email }}" class="value interactive-link dark reverse">{{ site.email }}</a>
+          {% capture emailLink %}
+            mailto:{{ site.email }}
+          {% endcapture %}
+          {% include arrow-link-inline.html label=site.email href=emailLink reverse=true %}
         </div>
         <div class="label-value">
           <h3 class="label">Contact us in person</h3>
