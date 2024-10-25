@@ -1,8 +1,8 @@
 ---
 # mandatory
 title: "Transform: Journalism"
-date: 2024-10-23 19:05:36+00:00
-date_informal: Fall 2024
+date: 2025-03-01 19:05:36+00:00
+date_informal: Spring 2025
 short_description: "An invite-only workshop for experts trying to reconcile the tensions between AI growth and journalism."
 description: "Transform: Journalism will be a closed-door gathering of experts from intersecting fields grappling with the interaction of generative AI and journalism."
 
