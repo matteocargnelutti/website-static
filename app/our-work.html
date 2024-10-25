@@ -56,10 +56,10 @@ layout: default
     </div>
   </section>
 
-  <section class="container pb-40 md:pb-80">
+  <section class="container pb-36">
     <div class="flex flex-col md:grid md:grid-cols-3 gap-28 md:gap-40">
       <h2 class="h2">Platforms</h2>
-      <div class="md:col-span-2 body-text flex flex-col gap-50 md:pt-24">
+      <div class="md:col-span-2 body-text flex flex-col gap-50 md:pt-18">
         <p class="flex flex-col gap-20 max-w-[700px]">
           Tools are the heart of the Library Innovation Lab. We build things. Our platforms each have their own user base and long-term goals.
         </p>
@@ -67,7 +67,7 @@ layout: default
     </div>
   </section>
 
-  <section class="flex flex-col gap-18 pb-40 md:pb-140">
+  <section class="flex flex-col gap-12 pb-12 tbl:gap-24 tbl:pb-24">
     {% assign active_platforms = site.our_work | where:"category","platforms" | where:"retired",false | sort: "order" %}
     {% for platform in active_platforms %}
       {% capture linkOneLabel %}
