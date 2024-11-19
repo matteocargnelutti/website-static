@@ -10,25 +10,6 @@
 # set "affiliated: true", "current: true"
 
 # LIL staff
-matteo-cargnelutti:
-  name: Matteo Cargnelutti
-  sort_name: Cargnelutti
-  role: Senior Software Engineer
-  bio: >
-    Matteo has been building for the web for most of his career. He has had
-    the opportunity to work with clients of all sizes on both sides of the
-    Atlantic, from local nonprofits to Fortune 500 companies. He has joined
-    LIL driven by a passion for the open web and a desire to explore different
-    scaling challenges. His work at LIL focuses on digital preservation and open knowledge.
-  email: mcargnelutti@law.harvard.edu
-  website: https://matteocargnelutti.dev
-  twitter_account_name: 
-  github_account_name: matteocargnelutti
-  image: matteo-cargnelutti.jpg
-  affiliated: true
-  current: true
-  section: Staff
-
 rebecca-cremona:
   name: Rebecca Cremona
   sort_name: Cremona
@@ -245,6 +226,20 @@ jonathan-zittrain:
   section: Faculty Director
 
 # Fellows and others
+
+matteo-cargnelutti:
+  name: Matteo Cargnelutti
+  sort_name: Cargnelutti
+  role: Fellow
+  bio: >
+    Matteo is a software engineer specializing in digital preservation and open knowledge. Currently serving as Principal Engineer at the Institutional Data Initiative, Matteo previously worked as a Senior Software Engineer at LIL. During his time at the lab, he contributed to the design and implementation of web archiving technologies that now power Perma.cc, and spearheaded technical research into how artificial intelligence is changing our relationship to knowledge. Through his ongoing fellowship, Matteo continues to contribute to LIL’s web archiving and “Librarianship of AI” research efforts.
+  email: mcargnelutti@law.harvard.edu
+  website: https://matteocargnelutti.dev
+  github_account_name: matteocargnelutti
+  image: matteo-cargnelutti.jpg
+  affiliated: true
+  current: true
+  section: Affiliates
 
 jim-cowie:
   name: Jim Cowie
