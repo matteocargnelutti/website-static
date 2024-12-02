@@ -1,6 +1,6 @@
 ---
 category: research
-subcategory: Upcoming
+subcategory: Access to Knowledge
 retired: false
 retired_date:
 
