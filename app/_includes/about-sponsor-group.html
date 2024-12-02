@@ -1,0 +1,10 @@
+<div class="flex flex-wrap justify-center gap-48 mb-24 mt-24">
+  {% for supporter in include.supporters %}
+    <div>
+      <img src="/assets/images/{{ supporter.logo }}" 
+           class="h-[100px]"
+           alt="{{ supporter.name }} Logo"
+           style="filter: grayscale(100%);" />
+    </div>
+  {% endfor %}
+</div>

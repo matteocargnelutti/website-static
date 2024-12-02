@@ -1,15 +1,42 @@
+institutions:
+  - name: Harvard Law School
+    logo: supporters/harvard-law-school-logo.png
 
-- name: Harvard Law School
-  logo: harvard-law-school-logo.png
+  - name: Berkman Klein Center for Internet & Society
+    logo: supporters/bkc-logo.svg
 
-- name: Filecoin Foundation for the Decentralized Web
-  logo: ffdw-logo.png
+foundations:
+  - name: Filecoin Foundation for the Decentralized Web
+    logo: supporters/ffdw-logo.png
 
-- name: LexisNexis
-  logo: lexisnexis-logo.png
+  - name: Institute of Museum and Library Services
+    logo: supporters/imls-logo.jpg
 
-- name: OpenAI
-  logo: openai-logo.png
+  - name: Knight Foundation
+    logo: supporters/knight-logo.png
 
-- name: Meta
-  logo: meta-logo.png
+nonprofits:
+  - name: Internet Archive
+    logo: supporters/ia-logo.svg
+
+  - name: Webrecorder
+    logo: supporters/webrecorder-logo.png
+
+  - name: Free Law Project
+    logo: supporters/flp-logo.svg
+
+companies:
+  - name: Cloudflare
+    logo: supporters/cloudflare-logo.png
+
+  - name: LexisNexis
+    logo: supporters/lexisnexis-logo.png
+
+  - name: Thomson Reuters
+    logo: supporters/tr-logo.png
+
+  - name: OpenAI
+    logo: supporters/openai-logo.png
+
+  - name: Fastcase
+    logo: supporters/fastcase-logo.png

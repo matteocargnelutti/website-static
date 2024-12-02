@@ -112,11 +112,15 @@ layout: default
 
   <section class="container">
     <h2 class="h2 mt-12 md:mt-0 mb-48 tbl:mb-36 md:mb-60">Supported By</h2>
-    <div class="flex flex-wrap flex-col tbl:grid tbl:grid-cols-2 xl:grid-cols-3 gap-y-24 sm:gap-y-36 tbl:gap-y-18 md:gap-y-36 lg:gap-y-48 items-center justify-center">
-      {% for supporter in site.data.supporters %}
-        <div class="tbl:m-auto"><img class="max-w-[50vw] sm:max-w-auto" src="/assets/images/{{ supporter.logo }}" alt="{{ supporter.name }} Logo" /></div>
-      {% endfor %}
-    </div>
+    <p class="body-text mb-48">We gratefully acknowledge support from, and collaboration with, these organizations.</p>
+    
+    {% include about-sponsor-group.html supporters=site.data.supporters.institutions %}
+    <hr class="w-[200px] mx-auto my-12 border-t-4 border-gray-300">
+    {% include about-sponsor-group.html supporters=site.data.supporters.foundations %}
+    <hr class="w-[200px] mx-auto my-12 border-t-4 border-gray-300">
+    {% include about-sponsor-group.html supporters=site.data.supporters.nonprofits %}
+    <hr class="w-[200px] mx-auto my-12 border-t-4 border-gray-300">
+    {% include about-sponsor-group.html supporters=site.data.supporters.companies %}
   </section>
 
 </div>
