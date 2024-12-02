@@ -70,14 +70,14 @@ layout: default
       {% endfor %}
     </div>
     <div class="pt-48 md:pt-72 border-t-1 border-black">
-      <h2 class="h2">Fellows</h2>
+      <h2 class="h2">Affiliates</h2>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-32 md:gap-x-60 lg:gap-x-90 xl:gap-x-120">
-        {% assign fellows = site.data.people | where: "affiliated", true | sort: "sort_name" %}
-        {% assign sections = "Fellows" | split: ", " %}
+        {% assign affiliates = site.data.people | where: "affiliated", true | sort: "sort_name" %}
+        {% assign sections = "Affiliates" | split: ", " %}
         {% for section in sections %}
-          {% assign fellows_people = fellows | where: "current", true | where: "section", section %}
-          {% if fellows_people != empty %}
-            {% for person in fellows_people %}
+          {% assign affiliated_people = affiliates | where: "current", true | where: "section", section %}
+          {% if affiliatated_people != empty %}
+            {% for person in affiliated_people %}
               {% include about-people-affiliated.html person=person %}
             {% endfor %}
           {% endif %}
