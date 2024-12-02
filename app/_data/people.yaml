@@ -239,7 +239,7 @@ matteo-cargnelutti:
   image: matteo-cargnelutti.jpg
   affiliated: true
   current: true
-  section: Fellows
+  section: Affiliates
 
 jim-cowie:
   name: Jim Cowie
@@ -252,7 +252,7 @@ jim-cowie:
   image: jim-cowie.jpg
   affiliated: true
   current: true
-  section: Fellows
+  section: Affiliates
 
 katy-ilonka-gero:
   name: Katy Ilonka Gero
@@ -274,7 +274,7 @@ katy-ilonka-gero:
   image: katy-ilonka-gero.jpg
   affiliated: true
   current: true
-  section: Fellows
+  section: Affiliates
 
 maxwell-neely-cohen:
   name: Maxwell Neely-Cohen
@@ -289,7 +289,7 @@ maxwell-neely-cohen:
   image: maxwell-neely-cohen.jpg
   affiliated: true
   current: true
-  section: Fellows
+  section: Affiliates
 
 
 # Former Fellows, and single-project collaborators
