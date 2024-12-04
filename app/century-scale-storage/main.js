@@ -69,7 +69,10 @@ function initIntersectionObservers() {
             updateNav(id)
 
             try {
-                window.scrollTo({ top: document.querySelector(`#${id}`).offsetTop, behavior: isReducedMotion() ? 'instant' : 'smooth' })
+                const target = document.querySelector(`#${id}`);
+                window.scrollTo({ top: target.offsetTop, behavior: isReducedMotion() ? 'instant' : 'smooth' })
+                target.tabIndex = -1;
+                target.focus({ focusVisible: false, preventScroll: true });
             } catch (e) {
 
             }
