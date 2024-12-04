@@ -7,17 +7,20 @@ window.onload = () => {
     // Initialize shared resources
     new p5(shared);
     initIntersectionObservers();
-    decay();
+    if (!isReducedMotion()) {
+        decay();
+    }
 
     document.addEventListener("resize", () => {
-        decay();
+        if (!isReducedMotion()) {
+            decay();
+        }
     });
 
     document.addEventListener("scroll", () => {
-        if (isReducedMotion()) {
-            return;
+        if (!isReducedMotion()) {
+            decay();
         }
-        decay();
     });
 };
 
