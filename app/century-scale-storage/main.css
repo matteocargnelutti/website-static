@@ -353,7 +353,7 @@ nav li a:hover {
     border-left: 1px solid var(--background);
 }
 
-.mini-nav>a {
+.mini-nav>span {
     background: var(--color);
     border: 1px solid var(--background);
     border-left: none;
@@ -362,7 +362,7 @@ nav li a:hover {
 }
 
 .mini-nav .on,
-.mini-nav a:hover {
+.mini-nav span:hover {
     background: var(--background);
 }
 

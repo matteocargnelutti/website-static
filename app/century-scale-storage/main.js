@@ -57,7 +57,7 @@ function initIntersectionObservers() {
     const sections = document.querySelectorAll('#credits, #answers-and-non-answers, #dispersal, #make-it-physical, #removable-media, #the-cloud, #hard-drives, #the-building-by-the-plum-orchard');
     let enableObservation = true;
 
-    document.querySelectorAll(".mini-nav a, nav a").forEach(el => {
+    document.querySelectorAll(".mini-nav span, nav a").forEach(el => {
         el.addEventListener("click", (e) => {
             e.preventDefault();
             // pause when jumping to section to avoid updating nav early
@@ -65,7 +65,7 @@ function initIntersectionObservers() {
                 enableObservation = false;
             }
 
-            const id = e.target.getAttribute('href').replace('#', '');
+            const id = (e.target.getAttribute('href') || e.target.dataset.href).replace('#', '');
             updateNav(id)
 
             try {
@@ -149,8 +149,8 @@ function updateNav(id) {
         }
     })
 
-    document.querySelectorAll('.mini-nav a').forEach(square => {
-        if (square.getAttribute('href') === `#${id}`) {
+    document.querySelectorAll('.mini-nav span').forEach(square => {
+        if (square.dataset.href === `#${id}`) {
             square.classList = 'on'
         } else {
             square.classList = ''
