@@ -442,7 +442,7 @@ lil-header.expanded .nav-menu__inner {
   border-radius: 36px;
   border: 1.5px solid #121212;
   position: relative;
-  transition: transform calc(300ms * var(--animation-rate)) ease;
+  transition: transform calc(500ms * var(--animation-rate)) ease;
 }
 
 .expandable__icon span {
@@ -453,27 +453,27 @@ lil-header.expanded .nav-menu__inner {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  transition: transform calc(300ms * var(--animation-rate)) ease;
+  transition: transform calc(500ms * var(--animation-rate)) ease;
 }
 
 .expandable__icon span:nth-child(1) {
   transform: translate(-50%, -50%) rotate(90deg);
-  transition: transform calc(300ms * var(--animation-rate)) ease;
+  transition: transform calc(500ms * var(--animation-rate)) ease;
 }
 
 .expandable__toggle:hover .expandable__icon {
   transform: rotate(90deg);
-  transition: transform calc(300ms * var(--animation-rate)) ease;
+  transition: transform calc(500ms * var(--animation-rate)) ease;
 }
 
 .expandable.expanded .expandable__icon {
   transform: rotate(90deg);
-  transition: transform calc(300ms * var(--animation-rate)) ease;
+  transition: transform calc(500ms * var(--animation-rate)) ease;
 }
 
 .expandable.expanded .expandable__icon span:nth-child(2) {
   transform: translate(-50%, -50%) rotate(-90deg);
-  transition: transform calc(300ms * var(--animation-rate)) ease;
+  transition: transform calc(500ms * var(--animation-rate)) ease;
 }
 
 .expandable__content {

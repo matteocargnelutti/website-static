@@ -282,7 +282,7 @@ class LilHeader extends HTMLElement {
             y: -40,
         })
 
-        gsap.to(this.menu, {duration: safeDuration(0.6 * animationRate), display: 'none'})
+        gsap.to(this.menu, {duration: safeDuration(1 * animationRate), display: 'none'})
     }
 }
 
@@ -345,7 +345,7 @@ class LilExpandable extends HTMLElement {
     openExpandableContent() {
         this.content.style.display = 'block';
         gsap.to(this.content, {
-            duration: safeDuration(0.6 * animationRate),
+            duration: safeDuration(1 * animationRate),
             ease: 'power4.inOut',
             height: this.content.scrollHeight,
             opacity: 1,
@@ -354,13 +354,13 @@ class LilExpandable extends HTMLElement {
 
     closeExpandableContent() {
         gsap.to(this.content, {
-            duration: safeDuration(0.6 * animationRate),
+            duration: safeDuration(1 * animationRate),
             ease: 'power4.inOut',
             height: 0,
             opacity: 0,
         })
         gsap.to(this.content, {
-            duration: safeDuration(0.6 * animationRate),
+            duration: safeDuration(1 * animationRate),
             ease: 'power4.inOut',
             display: 'none',
         })
