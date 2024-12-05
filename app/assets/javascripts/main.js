@@ -3,6 +3,9 @@ var _paq = _paq || [];
 _paq.push(['trackPageView']);
 _paq.push(['enableLinkTracking']);
 
+// Be sure to also set variable --animation-rate in main.css so it matches this value
+const animationRate = 0.3;
+
 function setVh() {
     const setValue = () => {
         var vh = window.innerHeight * 0.01;
@@ -156,9 +159,6 @@ class LilHeader extends HTMLElement {
     constructor() {
         super();
 
-        // Be sure to also set --animation-speed in main.css so it matches this
-        this.animationSpeed = 0.3;
-
         this.expanded = false;
         this.menuButton = this.querySelector('.menu-button');
         this.overlay = this.querySelector('.nav-menu__overlay');
@@ -226,7 +226,7 @@ class LilHeader extends HTMLElement {
         gsap.to(this.menu, {duration: 0, display: 'flex'})
 
         gsap.to(this.menu, {
-            duration: safeDuration(0.95 * this.animationSpeed),
+            duration: safeDuration(0.95 * animationRate),
             ease: 'expo.inOut',
             clipPath: 'inset(0% 0% 0% 0%)',
         })
@@ -235,7 +235,7 @@ class LilHeader extends HTMLElement {
             opacity: 0,
             y: -80,
         }, {
-            duration: safeDuration(1.2 * this.animationSpeed),
+            duration: safeDuration(1.2 * animationRate),
             ease: 'power3.out',
             opacity: 1,
             y: 0,
@@ -246,17 +246,17 @@ class LilHeader extends HTMLElement {
             opacity: 0,
             y: -10,
         }, {
-            duration: safeDuration(1 * this.animationSpeed),
+            duration: safeDuration(1 * animationRate),
             ease: 'power3.out',
             opacity: 1,
-            delay: 0.55 * this.animationSpeed,
+            delay: 0.55 * animationRate,
             y: 0,
         })
     }
 
     menuCloseAnimation() {
         gsap.to(this.menu, {
-            duration: safeDuration(0.8 * this.animationSpeed),
+            duration: safeDuration(0.8 * animationRate),
             ease: 'expo.inOut',
             clipPath: 'inset(0% 0% 100% 0%)',
         })
@@ -265,7 +265,7 @@ class LilHeader extends HTMLElement {
             opacity: 1,
             y: 0,
         }, {
-            duration: safeDuration(0.4 * this.animationSpeed),
+            duration: safeDuration(0.4 * animationRate),
             ease: 'power3.in',
             opacity: 0,
             y: -30,
@@ -276,13 +276,13 @@ class LilHeader extends HTMLElement {
             opacity: 1,
             y: 0,
         }, {
-            duration: safeDuration(0.4 * this.animationSpeed),
+            duration: safeDuration(0.4 * animationRate),
             ease: 'power3.in',
             opacity: 0,
             y: -40,
         })
 
-        gsap.to(this.menu, {duration: safeDuration(0.6 * this.animationSpeed), display: 'none'})
+        gsap.to(this.menu, {duration: safeDuration(0.6 * animationRate), display: 'none'})
     }
 }
 
@@ -295,7 +295,7 @@ class LilMarquee extends HTMLElement {
     }
 
     animate() {
-        gsap?.to(this.parts, {xPercent: -100, repeat: -1, duration: safeDuration(60), ease: "linear"}).totalProgress(0.5);
+        gsap?.to(this.parts, {xPercent: -100, repeat: -1, duration: safeDuration(60 * animationRate), ease: "linear"}).totalProgress(0.5);
         gsap?.set(this.inner, {xPercent: -50});
     }
 }
@@ -345,7 +345,7 @@ class LilExpandable extends HTMLElement {
     openExpandableContent() {
         this.content.style.display = 'block';
         gsap.to(this.content, {
-            duration: safeDuration(0.6),
+            duration: safeDuration(0.6 * animationRate),
             ease: 'power4.inOut',
             height: this.content.scrollHeight,
             opacity: 1,
@@ -354,13 +354,13 @@ class LilExpandable extends HTMLElement {
 
     closeExpandableContent() {
         gsap.to(this.content, {
-            duration: safeDuration(0.6),
+            duration: safeDuration(0.6 * animationRate),
             ease: 'power4.inOut',
             height: 0,
             opacity: 0,
         })
         gsap.to(this.content, {
-            duration: safeDuration(0.6),
+            duration: safeDuration(0.6 * animationRate),
             ease: 'power4.inOut',
             display: 'none',
         })
