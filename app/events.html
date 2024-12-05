@@ -36,9 +36,9 @@ layout: default
       <section class="container">
         <div class="flex flex-col items-start gap-12">
           <div class="label">Next Event</div>
-          <div class="flex flex-col md:grid md:grid-cols-3 md:gap-36 pb-36 md:pb-48">
+          <div class="flex flex-col md:grid md:grid-cols-3 md:gap-36 pb-36 md:pb-48 items-baseline">
             <h1 class="h2">{{ next_event.title }} - {{ next_event.date_informal }}</h1>
-            <div class="md:col-span-2 body-text md:max-w-[700px] pt-20 flex flex-col items-start gap-20">
+            <div class="md:col-span-2 body-text md:max-w-[700px] flex flex-col items-start gap-20">
               {{ next_event.excerpt }}
               {% capture linkLabel %}
                 <span class="sr-only">{{ next_event.title }},</span> More Info
@@ -54,7 +54,7 @@ layout: default
   {% if upcoming_events.size > 0 %}
     <section class="container mb-36 md:mb-60">
       <h2 class="h2">Upcoming</h2>
-      <div class="flex flex-col items-start w-full">
+      <div class="flex flex-col w-full">
 
         {% for event in upcoming_events %}
           {% capture linkLabel %}
@@ -73,7 +73,7 @@ layout: default
   {% if past_events.size > 0 %}
     <section class="container">
       <h2 class="h2">Past</h2>
-      <div class="flex flex-col items-start w-full">
+      <div class="flex flex-col w-full">
         {% for event in past_events %}
           {% capture linkLabel %}
             <strong>{{event.title}}</strong> - {{event.short_description}}
