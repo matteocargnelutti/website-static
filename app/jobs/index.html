@@ -1,97 +1,69 @@
 ---
-title: Jobs
+title: Careers
 slug: jobs
-layout: sectioned-page
+layout: default
 ---
-<section>
-  <div class="sleeve">
-    <h1>{{ page.title }}</h1>
 
-    <div class="slice">
-      <h2>Table of contents</h2>
-      <div class="slice-body">
-        <ul>
-          <li>
-            <a href="#background">Background</a>
-            <ul>
-              <li><a href="#about">About us</a></li>
-              <li><a href="#why">Why work with us?</a></li>
-              <li><a href="#location">Location</a></li>
-              <li><a href="#ediba">Equity, diversity, inclusion, belonging and antiracism</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#staff">Staff positions</a>
-            <ul>
-              <li><a href="#sse-fs">Senior Software Engineer</a></li>
-            </ul>
-          </li> 
-        </ul>
-      </div>
-    </div>
-
-    <div class="slice">
-      <h2 id="background">Background</h2>
-      <div class="slice-body">
-        <h3 id="about">About us</h3>
-        <p>
-          The Library Innovation Lab is a team of librarians, programmers, artists, and lawyers with a broad mission: to
-          build open-source tools and services for open knowledge, available to everyone and in the public interest,
-          that solve emerging information problems from the perspective of the world's largest academic law library.
-          We currently support three long-running services (
-            <a href="https://perma.cc">Perma</a>,
-            <a href="https://opencasebook.org">H2O Open Casebook</a>, and the
-            <a href="https://case.law">Caselaw Access Project</a>
-          ) as well as a range of shorter-term experiments.
-          On the tech side, we work most often with Django, Vue, and Postgres.
-        </p>
-        <h3 id="why">Why work with us?</h3>
-        <p>
-          LIL offers a rare mix of contemplation and action: we are a small software lab within one of the world’s
-          largest law libraries, with a mission both to try new things and to think deeply about what ought to exist
-          for the long haul. Our mission offers a range of benefits for staff:
-        </p>
-        <ul>
-          <li>Job stability and support. While we maintain the creative atmosphere and flexibility of a small innovation lab, we're backed by an established institution with strong benefits and support for employees.</li>
-          <li>Room to pursue your research agenda. We are located at the Harvard Law School Library and share a kitchen with  the Berkman Klein Center and metaLAB. Going to events, having conversations, developing your scholarly perspective, and exploring it through creative projects are encouraged. We will specifically prioritize these things at the cost of shipping the next feature.</li>
-          <li>Set your own pace. We are a small, self-directed group that depends on internal motivation rather than externally imposed crunch time.</li>
-          <li>Build open source. All of our projects are open source and otherwise designed to maximize the public benefit of our work.</li>
-          <li>Work on stuff that matters. The projects we make are measured by how they help people in the long term.</li>
-        </ul>
-        <h3 id="location">Location</h3>
-        <p>
-          We are based in a newly-renovated space on the Harvard Law School campus. Our full-time staff positions are
-          hybrid/in-person; we typically aim to be in the office Tuesday through Thursday. Contractor and fellowship
-          positions may be remote by individual arrangement.
-        </p>
-        <h3 id="ediba">Equity, diversity, inclusion, belonging and antiracism</h3>
-        <p>
-          The work and well-being of the Lab are strengthened profoundly by the
-          diversity of our community and our differences in background, culture,
-          experience, racial identity, national origin, religion, sexual orientation, and much
-          more. We actively seek and welcome applications from Black and Indigenous people and people of color;
-          women and non-binary people; the LGBTQ+ community; and people with disabilities; as well as
-          applications from researchers and practitioners from across the
-          spectrum of disciplines, methods, and life experiences.
-        </p>
-      </div>
-    </div>
-
-    <div class="slice">
-      <h2 id="staff">Staff positions</h2>
-      <div class="slice-body">
-        <h3 id="sse-fs">Senior Software Engineer - Full Stack</h3>
-        <p>
-          As a member of our engineering team, the Senior Software Engineer will work across our various tools, applications, and experiments to fulfill LIL's mission to bring library principles to technological frontiers. The ideal candidate will have experience building performant, testable, maintainable, and fault-tolerant products and tools at scale, for audiences both technical and non-technical.
-        </p>
-        <p>
-          <b>To apply:</b>
-          <a href="https://sjobs.brassring.com/TGnewUI/Search/Home/Home?partnerid=25240&siteid=5341#jobDetails=2011857_5341">Application form</a>.
-          <em>
-            In addition to Harvard's standard application form, please provide a short cover letter explaining how your career trajectory and interests align with our work and mission.
-          </em>
-        </p>
-      </div>
+<section class="container">
+  <div class="page-hero simple">
+    <h1 class="page-hero__title">{{ page.title }}</h1>
+    <div class="page-hero__subtitle">
+      Joining our team means standing at the intersection of law, librarianship, and technology within an academic context. We offer a low-pressure, self-directed environment with lots of room to explore, learn, collaborate, and teach.
     </div>
   </div>
 </section>
+
+<div class="flex flex-col gap-50 md:gap-80">
+  <section>
+    <figure>
+      <picture>
+        <img src="{{ site.baseurl }}/assets/images/lewis-center-careers.png"
+            alt=""
+            class="img-full-width aspect-[1/.45] object-cover overflow-hidden">
+      </picture>
+      <figcaption class="block container text-16 py-8">
+        <strong>Credit: Bob O’Connor</strong>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="container flex flex-col gap-24 md:gap-40{% if site.jobs.size == 0 %} pb-66{% endif %}">
+    <h2 class="h2">Background</h2>
+    <div class="md:grid md:grid-cols-12">
+      <div class="w-full md:col-span-9 md:col-start-4">
+      {% assign background_sections = site.jobs | where:"category","background" | sort: "order" %}
+        {% for section in background_sections %}
+          {% include job.html title=section.title content=section.content %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% assign staff_sections = site.jobs | where:"category","staff" | sort: "order" %}
+  {% if staff_sections.size > 0 %}
+  <section class="container flex flex-col gap-24 md:gap-40{% if staff_sections.size == site.jobs.size %} pb-66{% endif %}">
+    <h2 class="h2">Staff Positions</h2>
+    <div class="md:grid md:grid-cols-12">
+      <div class="w-full md:col-span-9 md:col-start-4">
+        {% for section in staff_sections %}
+          {% include job.html title=section.title content=section.content %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% assign research_sections = site.jobs | where:"category","research" | sort: "order" %}
+  {% if research_sections.size > 0 %}
+  <section class="container flex flex-col gap-24 md:gap-40 pb-66">
+    <h2 class="h2">Research Positions</h2>
+    <div class="md:grid md:grid-cols-12">
+      <div class="w-full md:col-span-9 md:col-start-4">
+        {% for section in research_sections %}
+          {% include job.html title=section.title content=section.content %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+</div>

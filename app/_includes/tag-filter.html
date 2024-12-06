@@ -2,17 +2,25 @@
 
 {% if site.show_blog_featured_tags %}
 
-<div class="sleeve">
-  <nav class="posts-filter" aria-label="Featured Tags">
-    <ul>
-      <li>
-        <a class="tag" href="{{ site.baseurl }}/blog/"{% if current == "all" %} aria-current="true"{% endif %}>
-          All
-        </a>
-      </li>
+<div>
+  <nav aria-label="Featured Tags">
+    <ul class="flex flex-wrap flex-col sm:flex-row gap-10 mt-12 sm:mt-0">
       {% for tag in site.data.featured_tags %}
+        {% assign isActive = false  %}
+        {% if current == tag %}
+          {% assign isActive = true %}
+        {% endif %}
+        {% for includedTag in include.tags %}
+          {% if tag == includedTag %}
+            {% assign isActive = true %}
+          {% endif %}
+        {% endfor %}
         <li>
-          <a class="tag" href="{{ site.baseurl }}/blog/tag/{{ tag | slugify}}/"{% if current == tag %} aria-current="true"{% endif %}>
+          <a
+            class="block text-14 tbl:text-16 px-10 py-6 tbl:px-24 tbl:py-12 border-1 border-black text-black active:text-white active:bg-black tbl:hover:text-white md:hover:bg-black transition-colors duration-300 ease {% if isActive %}bg-black text-white{% endif %}"
+            href="{% if current == tag %}{{ site.baseurl }}/blog{% else %}{{ site.baseurl }}/blog/tag/{{ tag | slugify}}/{% endif %}"{% if current == tag %} aria-current="true"{% endif %}
+            data-no-swup
+          >
           {{ tag }}
           </a>
         </li>

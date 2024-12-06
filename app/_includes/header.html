@@ -1,19 +1,21 @@
-{% if page.slug == "home" %}
-<div class="hiring-announcement">
-      <a href="{{ site.baseurl }}/jobs/">
-        We're hiring!
-        We're looking for a Senior Software Engineer.
+<lil-header class="block relative z-header">
+  {% if page.slug == "home" %}
+    {% include hiring-banner.html title="Senior Software Engineer" %}
+  {% endif %}
+  <header class="pt-24 md:pt-36 nav-container">
+    <div class="flex items-center justify-between">
+      <div aria-hidden class="opacity-0 w-[40px] md:w-[56px]"></div>
+      <a href="/" class="logo">
+        <span class="sr-only">Home</span>
+        <span aria-hidden="true">
+          {% include header-splash-logo.html %}
+        </span>
       </a>
-    </div>
-  <header class="header-splash">
-    <div>
-      {% include header-splash-logo.html %}
-      <h1 class="header-splash__description" contenteditable="true">{{ page.title | smartify }}</h1>
+      <button class="menu-button" aria-haspopup="menu" aria-expanded="false" aria-label="Open naviation">
+        <span class="menu-button__bar"></span>
+        <span class="menu-button__bar"></span>
+      </button>
     </div>
     {% include nav.html %}
   </header>
-{% else %}
-  <header>
-    {% include nav.html %}
-  </header>
-{% endif %}
+</lil-header>
