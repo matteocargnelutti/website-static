@@ -45,7 +45,7 @@ jobs:
           LIVE_SITE: ${{ secrets.LIVE_SITE }}
         run: |
           set -x
-          CSS_BUST=$(find build/assets/css -type f -exec bash -c 'if [[ `diff {} <(curl -s "https://$LIVE_SITE/$(echo "{}" | cut -c 7-)")` ]]; then echo "bust ({})"; fi' \;)
+          CSS_BUST=$(find build/assets/css build/*.config.js -type f -exec bash -c 'if [[ `diff {} <(curl -s "https://$LIVE_SITE/$(echo "{}" | cut -c 7-)")` ]]; then echo "bust ({})"; fi' \;)
           if [[ $CSS_BUST ]] ; then
               COUNTER=`grep css-cache-buster app/_layouts/default.html | sed -r 's/.*css-cache-buster=([0-9]+).*/\1/'`
               let NEWCOUNTER=$COUNTER+1
