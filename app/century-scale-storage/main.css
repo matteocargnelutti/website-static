@@ -4,6 +4,7 @@
     color: var(--color);
     background: var(--background);
     font-family: "Newsreader", serif;
+    font-size-adjust: from-font;
 }
 
 * {
