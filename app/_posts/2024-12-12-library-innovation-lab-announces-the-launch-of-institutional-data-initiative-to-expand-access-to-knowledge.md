@@ -5,8 +5,9 @@ guest-author: Library Innovation Lab Team
 excerpt_separator: <!--more-->
 ---
 ![Library Innovation Lab and Institutional Data Initiative logos](https://lil-blog-media.s3.amazonaws.com/idi-logo-7Q2.png)
+
 **Cambridge, MA** – Harvard Law School’s Library Innovation Lab (LIL) is proud to announce the official [launch](https://institutionaldatainitiative.org/hello-world.html) of the [Institutional Data Initiative (IDI)](https://institutionaldatainitiative.org/), a groundbreaking program helping libraries, government agencies, and other knowledge institutions share digital collections with their patrons while improving the accuracy and reliability of AI tools for all. 
-<!--more-->
+
 First developed by Greg Leppert at the Library Innovation Lab, and now led by Leppert as Executive Director, IDI seeks to redefine the creation and stewardship of the knowledge and datasets that define AI research. 
 
 Following in the footsteps of LIL’s [Caselaw Access Project](http://case.law), the foundational dataset of IDI will be nearly one million public domain books, created thanks to the wide-ranging resources and expertise of the Harvard Library system. By prioritizing the assembly and release of open access public domain materials, as well as using [principles developed at LIL](https://lil.law.harvard.edu/our-work/librarianship-of-ai/) for approaching large scale data with a library lens, IDI bridges the gap between model makers and knowledge institutions. 
