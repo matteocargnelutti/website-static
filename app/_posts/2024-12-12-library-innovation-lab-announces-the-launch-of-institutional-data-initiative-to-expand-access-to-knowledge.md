@@ -23,6 +23,8 @@ ____
 *The Library Innovation Lab at Harvard Law School brings library principles to technological frontiers. They explore the future of libraries and the creation, dissemination, and preservation of knowledge. Through innovative projects, platforms, and partnerships, the Lab aims to advance access to information and foster collaboration across disciplines.*
 
 **Contact:**
-Jack Cushman	
+Jack Cushman 
+<br>
 Director, Harvard Library Innovation Lab
+<br>
 lil@law.harvard.edu
