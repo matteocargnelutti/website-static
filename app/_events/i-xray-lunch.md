@@ -11,15 +11,14 @@ banner_large: i-xray-banner-lrg.png
 **Lunch will be provided**<br />
 **Open to the Harvard community**
 
-## <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIkFzZcRi1pOsEDAZHXLebvZry3VbRoFmW27aDiAHdnrF07g/viewform?usp=header">Please RSVP.</a>
+**Please <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIkFzZcRi1pOsEDAZHXLebvZry3VbRoFmW27aDiAHdnrF07g/viewform?usp=header">RSVP</a>.**
 
-When they combined Ray-Ban Meta smart glasses, face search engines, LLMs, and public databases and started walking around Harvard Square AnhPhu Nguyen and Caine Ardayfio started to raise awareness about the current capabilities of everyday surveillance. Their viral project, I-XRAY, are AI glasses that reveal anyone’s personal details—home address, name, phone number, and more—just from looking at them. 
+By combining Ray-Ban Meta smart glasses, face search engines, LLMs, and public databases, AnhPhu Nguyen and Caine Ardayfio have started to raise awareness about the current capabilities of everyday surveillance. Their viral project, I-XRAY, is a pair of glasses that reveal to the wearer anyone’s personal details—home address, name, phone number, and more—just by looking at them.
 
-I-XRAY was built here at Harvard and tested out around campus. Instead of releasing the technology itself, they’ve documented how everyday people can remove themselves from the databases that made it possible. On January 29th they will sit down with Professor Jonathan Zittrain to discuss the project and how it unfolded. 
+I-XRAY was built here at Harvard and tested out around campus. Instead of releasing the technology itself, Nguyen and Ardayfio have documented how people can remove themselves from the databases that made it possible. On January 29th, they will sit down with Professor Jonathan Zittrain to discuss the project and how it unfolded.
 
-You can read more about their project in the <a href="https://www.nytimes.com/2024/10/24/technology/facial-recognition-glasses-privacy-harvard.html">New York Times.</a> 
+You can read <a href="https://www.nytimes.com/2024/10/24/technology/facial-recognition-glasses-privacy-harvard.html">more about their project</a> in <i>The New York Times</i>.
 
-AnhPhu Nguyen and Caine Ardayfio are students at Harvard College. 
+AnhPhu Nguyen and Caine Ardayfio are students at Harvard College.
 
 Professor Jonathan Zittrain is the George Bemis Professor of International Law at Harvard Law School. He is also a Professor of Public Policy, Harvard John F. Kennedy School of Government, a professor of computer science at the Harvard School of Engineering and Applied Sciences, director of the Harvard Law School Library, and co-founder and director of Harvard’s Berkman Klein Center for Internet & Society.
-
