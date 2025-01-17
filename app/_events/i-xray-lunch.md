@@ -6,9 +6,9 @@ description: "Professor Jonathan Zittrain sits down with student creators AnhPhu
 banner: i-xray-banner-sml.png
 banner_large: i-xray-banner-lrg.png
 ---
-**Location:** Lewis Hall, 5th floor at the Berkman Klein Center’s Multi-Purpose Room 515
-**Time:** 12:15 pm - 1:15 pm
-**Lunch will be provided**
+**Location:** Lewis Hall, 5th floor at the Berkman Klein Center’s Multi-Purpose Room 515<br />
+**Time:** 12:15 pm - 1:15 pm<br />
+**Lunch will be provided**<br />
 **Open to the Harvard community**
 
 ## <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIkFzZcRi1pOsEDAZHXLebvZry3VbRoFmW27aDiAHdnrF07g/viewform?usp=header">Please RSVP.</a>
