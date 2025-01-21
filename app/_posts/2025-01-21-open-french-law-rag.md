@@ -2,6 +2,7 @@
 title: "Open French Law RAG: Using AI for Cross-Language Legal Information Retrieval"
 guest-author: "Kristi Mukk, Matteo Cargnelutti and Betty Queffelec"
 excerpt_separator: <!--more-->
+sharing-image: images/oflr-social.jpg
 tags:
 - AI Research
 ---
