@@ -7,7 +7,7 @@ tags:
 ---
 
 
-<a href="https://lil.law.harvard.edu/open-french-law-rag"><img src="https://lil-blog-media.s3.amazonaws.com/oflr-1400.jpg" alt="Open French Law RAG Case Study"/><a>
+<a href="https://lil.law.harvard.edu/open-french-law-rag"><img src="https://lil-blog-media.s3.amazonaws.com/oflr-1400.jpg" alt="Open French Law RAG Case Study"/></a>
 
 Imagine that you are an English speaker visiting France, engaged in discussion with a French local about a legal issue, but you are a novice French speaker and not familiar with the French legal system. Fortunately, you have a laptop containing over 800,000 French law articles, where the answer to your question may be found. You also have access to open-source software and a multilingual large language model, capable of reading these legal documents and answering questions about them in English. Could a tool like this help you overcome both language and knowledge barriers when exploring large collections of information? How might LLMs help people access and understand legal information that is either in a foreign language or requires specialized knowledge? 
 
