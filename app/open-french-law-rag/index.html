@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Open French Law RAG | Library Innovation Lab</title>
+    <meta name="description" content="A Case Study of Retrieval Augmented Generation Applied to Cross-Language Legal Information Retrieval" />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="assets/css/index.css?cache=1" />
+    <link rel="icon" href="assets/images/favicon.png">
+
+    <script type="module" src="assets/javascript/index.js?cache=2"></script>
+
+    <meta property="og:image" content="https://lil-blog-media.s3.amazonaws.com/oflr-social-L9A.jpg" />
+  </head>
+
+  <body>
+    
+    <header>
+      <h1>
+        <strong>Open French Law RAG</strong>
+        <span>A Case Study of Retrieval Augmented Generation Applied to Cross-Language Legal Information Retrieval</span>
+      </h1>
+    </header>
+
+    <nav id="outline-mobile">
+      <ul aria-hidden="true">
+        <li><a tabindex="-1" href="#introduction">Introduction</a></li>
+        <li><a tabindex="-1" href="#technical-infrastructure">Technical Infrastructure</a></li>
+        <li><a tabindex="-1" href="#experimental-set-up">Experimental Set-Up</a></li>
+        <li><a tabindex="-1" href="#analysis">Analysis</a></li>
+        <li><a tabindex="-1" href="#conclusion">Conclusion</a></li>
+        <li><a tabindex="-1" href="#future-directions">Future Directions</a></li>
+        <li><a tabindex="-1" href="#supplemental-materials">Supplemental Materials</a></li>
+        <li><a tabindex="-1" href="#thanks-and-acknowledgements">Thanks and Acknowledgements</a></li>
+      </ul>
+      <button tabindex="1">Outline</button>
+    </nav>
+
+    <main>
+      <nav id="outline">
+        <ul>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#technical-infrastructure">Technical Infrastructure</a></li>
+          <li><a href="#experimental-set-up">Experimental Set-Up</a></li>
+          <li><a href="#analysis">Analysis</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+          <li><a href="#future-directions">Future Directions</a></li>
+          <li><a href="#supplemental-materials">Supplemental Materials</a></li>
+          <li><a href="#thanks-and-acknowledgements">Thanks and Acknowledgements</a></li>
+        </ul>
+      </nav>
+
+      <div class="content">
+        <section id="authors" class="fade-in">
+          <div class="author">
+            <img src="https://lil-blog-media.s3.amazonaws.com/kristi-mukk.jpg" alt="Kristi Mukk"/>
+            <a href="https://lil.law.harvard.edu/about/#kristi-mukk">Kristi Mukk</a>
+            <span>Librarian</span>
+          </div>
+
+          <div class="author">
+            <img src="https://lil-blog-media.s3.amazonaws.com/betty-queffelec.jpg" alt="Betty Queffelec"/>
+            <a href="https://www.umr-amure.fr/equipe/queffelec-betty/?lang=en">Betty Queffelec</a>
+            <span>Legal Scholar (France)</span>
+          </div>
+
+          <div class="author">
+            <img src="https://lil-blog-media.s3.amazonaws.com/matteo-cargnelutti.jpg" alt="Matteo Cargnelutti"/>
+            <a href="https://lil.law.harvard.edu/about/#matteo-cargnelutti">Matteo Cargnelutti</a>
+            <span>Software Engineer</span>
+          </div>
+
+          <div class="lil">
+            <a href="https://lil.law.harvard.edu" title="Library Innovation Lab at Harvard Law School">
+              <img src="assets/images/lil.svg" alt="Library Innovation Lab at Harvard Law School"/>
+            </a>
+          </div>
+        </section>
+
+        <hr/>
+
+        <section id="introduction">
+          <h2 class="fade-in">Introduction</h2>
+
+          <p class="fade-in">
+          How might Large Language Models (LLMs) help people access and understand legal information that is either in a foreign language or requires specialized knowledge outside of their field of expertise or legal system? In this case study we explore whether and how Large Language Models (LLMs) could—with the help of Retrieval Augmented Generation (RAG) techniques—be used as both translators and legal experts when provided with a foreign law knowledge base. By experimenting with an off-the-shelf pipeline that combines LLMs with multilingual RAG techniques, we aimed to investigate how such a tool might help non-French speakers of varying expertise explore a vast French law corpora. 
+          </p>
+
+          <p class="fade-in">
+          We chose French law as the focus for our experiment due to its structural compatibility with our research objectives and RAG setup. In the French civil law system, the emphasis is primarily on statutes—many of which are codified—rather than on case law, which are not binding precedents. This framework provided a favorable environment for experimenting with RAG for legal information retrieval, as it allows for the integration of structured information. Case law remains important to understand how judges interpret French legal text, but case law is not binding for future cases. This distinctive feature of the French legal framework provided a conducive environment for our experiment’s use case due to civil law’s structured, codified, and more predictable nature in comparison to common law. Another factor we considered was access to law, as French legal documents and codes are primarily available in French, posing a barrier for non-French speakers.
+          </p>
+
+          <p class="fade-in">
+          We built the Open French Law pipeline to experiment with a new approach to legal research and information retrieval using custom multilingual RAG centered around off-the-shelf tools. We used the <a href="https://huggingface.co/datasets/harvard-lil/cold-french-law">Collaborative Legal Open Data (COLD) French Law Dataset</a>, which comprises over 800,000 articles we assembled and used, as the foundation of this pipeline for the purpose of our experiment. We critically examined the capabilities and limitations of this off-the-shelf approach, and analyzed the nature and frequency of errors, whether relevant legal sources were retrieved, how responses incorporated sources, and how queries related to specialized legal domains were interpreted. 
+          </p>
+
+          <p>
+          This project is part of the Library Innovation Lab’s <a href="https://lil.law.harvard.edu/our-work/librarianship-of-ai/">ongoing series exploring how artificial intelligence changes our relationship to knowledge</a>. It underscores our collaborative efforts with the legal technology community to lower the barrier of entry for experimentation as we build the next generation of legal tools. This project inspired the development and release of the <a href="https://lil.law.harvard.edu/blog/2024/03/08/announcing-the-open-legal-ai-workbench-olaw/">Open Legal AI Workbench (OLAW)</a>, a simple, well-documented, and extensible framework for legal AI researchers to experiment with tool-based retrieval augmented generation. Central to our approach is our emerging practice and guiding framework “Librarianship of AI”, which advocates for a critical assessment of the capabilities, limitations, and tradeoffs of AI tools. Through this critical lens grounded in library principles, we aim to help users make informed decisions and empower them to use AI responsibly. Legal scholars, librarians, and engineers all have a crucial role in the building and evaluation of LLMs for legal applications, and each of these perspectives are represented by the authors of this paper: <a href="https://lil.law.harvard.edu/about/#matteo-cargnelutti">Matteo Cargnelutti</a> (software engineer) built the technical infrastructure for this experiment, <a href="https://lil.law.harvard.edu/about/#kristi-mukk">Kristi Mukk</a> (librarian) designed the experiment and evaluation framework, and <a href="https://www.umr-amure.fr/equipe/queffelec-betty/?lang=en">Betty Queffelec</a> (legal scholar) analyzed the model’s responses. Leveraging Betty’s expertise in environmental law, we primarily focused our experimental scope on this legal domain. 
+          </p>
+
+          <h3 class="fade-in">Why use RAG for specialized domains like law?</h3>
+
+          <p>
+          Using <a href="https://scriv.ai/guides/retrieval-augmented-generation-overview/">Retrieval-Augmented Generation (RAG)</a> for specialized domains like law provides the advantages of combining the retrieval of relevant legal texts with the generative capabilities and language processing of LLMs. RAG works by taking a user’s natural language query, searching for and retrieving relevant documents or excerpts, and then using the retrieved text as context to generate a response. Our hypothesis was that this process could enhance the relevance of responses by grounding the model in contextually relevant, accurate, up-to-date legal sources which may help reduce <a href="https://arxiv.org/abs/2401.06796">“hallucinations”</a>. This capability is particularly important for legal question answering, where the reliability and specificity of information is crucial. Furthermore, RAG systems can enhance the transparency of responses by linking the sources and references used to generate the response. This allows users to trace the provenance of the information, ensuring its accuracy and relevance. This is essential for trust calibration, as users must be able to verify the sources provided to assess the trustworthiness of the information. 
+          </p>
+
+          <p>
+          However, RAG systems have drawbacks as they are constrained by the limitations of information retrieval systems and depend on the inherent variability of LLMs. The potential for “hallucinations,” or factual errors, poses significant risks within the legal domain. A <a href="https://hai.stanford.edu/news/hallucinating-law-legal-mistakes-large-language-models-are-pervasive">study by Stanford RegLab and the Institute from Human-Centered AI</a> highlights the widespread issue of legal hallucinations in LLMs, where these models often exhibit overconfidence, fail to recognize their own errors, and perpetuate incorrect legal understandings. This underscores the importance of investigating the error boundaries of these tools in order to effectively calibrate trust. 
+          </p>
+
+          <h3 class="fade-in">Leveraging the multilingual properties of LLMs for legal translation </h3>
+
+          <p>
+          Cross-language legal translation presents additional complexities, demanding precision and interpretation that extends beyond mere language conversion and grammatical accuracy. This is particularly true in the legal domain, where precision and textual and factual accuracy are critical. Legal translation necessitates a deep understanding of cultural and contextual nuances of legal concepts, complex reasoning, and differing legal systems and vocabularies to achieve accuracy and reliability. In some cases, human intervention may be needed to navigate these challenges. However, <a href="https://arxiv.org/abs/2305.16768">multilingual language models have exhibited cross-language transferability across certain tasks</a> with minimal or no additional training data. 
+          </p>
+
+        </section>
+
+        <hr/>
+
+        <section id="technical-infrastructure">
+          <h2>Technical infrastructure</h2>
+
+          <p>
+            <em><strong>Authored by:</strong> Matteo Cargnelutti, Software Engineer</em>
+          </p>
+
+          <p>
+          This section describes the technical infrastructure we assembled to support this experiment. We focused on using as many off-the-shelf components as possible to create an experimental apparatus that makes it easy for others in the legal technology community to experiment with “cookie-cutter” Retrieval Augmented Generation as practiced at the time of the experiment (fall 2023). 
+          </p>
+
+          <p>This apparatus is made of two key components:</p>
+
+          <ul>
+            <li><strong>An ingestion pipeline</strong>, transforming the knowledge base into a vector store.</li>
+            <li><strong>A Q&A pipeline</strong>, which makes use of that vector store to help the target LLMs answer questions.</li>
+          </ul>
+
+          <p>
+          The source code for this experimental setup is open-source and <a href="https://github.com/harvard-lil/open-french-law-rag-pipeline">available on Github</a>.
+          </p>
+
+          <h3>Knowledge base</h3>
+
+          <p>
+          The knowledge base we used as the foundation of this RAG pipeline is the <a href="https://huggingface.co/datasets/harvard-lil/cold-french-law">COLD French Law Dataset</a>, which was originally assembled by our team for the purpose of this experiment. This dataset, currently consisting of 841,761 entries, was filtered out of France’s <a href="https://www.data.gouv.fr/fr/datasets/legi-codes-lois-et-reglements-consolides/">“LEGI: Codes, lois et règlements consolidés”</a> bulk export, focusing solely on currently applicable law articles (entries of any kind with status “VIGUEUR” meaning “in force”). While this dataset does not contain any case law, we assessed that its breadth and depth is appropriate for the purpose of this experiment. 
+          </p>
+
+          <h3>Ingestion pipeline</h3>
+
+          <figure>
+            <a href="https://lil-blog-media.s3.amazonaws.com/ingestion-pipeline.webp">
+              <img 
+                src="https://lil-blog-media.s3.amazonaws.com/ingestion-pipeline.webp" 
+                alt="Figure 1. Processing stages of the ingestion pipeline."/>
+            </a>
+
+            <figcaption>Figure 1. Processing stages of the ingestion pipeline.</figcaption>
+          </figure>
+
+          <p>
+          The goal of the ingestion pipeline was to take all of the French language articles from the COLD French Law dataset and to process them in a way that allows for performing cross-language <a href="https://www.sbert.net/examples/applications/semantic-search/README.html">vector-based, asymmetric semantic search</a>. This was achieved by passing textual data coming from the dataset to a text similarity model – here <a href="https://arxiv.org/abs/2402.05672">intfloat/multilingual-e5-large</a> – to extract and encode the “meaning” of the provided text excerpts into high-dimensional vectors (embeddings) which are then saved into a vector store (<a href="https://www.trychroma.com/">ChromaDB</a>).   
+          </p>
+
+          <p>
+          While training or fine-tuning a text-similarity model specifically for the needs of this experiment seemed appropriate, we opted to find and use a readily available open-source text similarity model. This decision aligned with our project-wide constraint of using as many off-the-shelf tools as possible. We assessed that <a href="https://arxiv.org/abs/2402.05672">intfloat/multilingual-e5-large</a> was a suitable text similarity model for this experiment given that:
+          </p>
+
+          <ul>
+            <li>It was trained for cross-language asymmetric semantic search tasks</li>
+            <li>It supports fairly long input length (512 tokens)</li>
+            <li>It supports 100 different languages, including French and English</li>
+            <li>It performs well on the <a href="https://arxiv.org/abs/2210.07316">MTEB Benchmark</a> for the tasks we are interested in</li>
+          </ul>
+
+          <p>
+          The choice of the text-similarity model determined the behavior and specifications of the rest of the pipeline. While the majority of the entries present in the source dataset were shorter than the model’s maximum input length, the pipeline needed to feature an efficient text splitter for entries going over 512 tokens of length. We decided to make use of <a href="https://python.langchain.com/v0.1/docs/modules/data_connection/document_transformers/split_by_token/#sentencetransformers">LangChain’s utility for splitting text into chunks based on the target model’s maximum input length</a>, a feature made possible by both the target model’s and LangChain’s support for the <a href="https://www.sbert.net/index.html">SentenceTransformers framework</a>. That splitting operation resulted in the creation of 965,129 individual chunks from 841,761 entries. In accordance with the scope of our experiment (aiming at replicating a standard off-the-shelf experience) as well as to account for the context length limitations of the text generation models we picked, we decided against implementing supplemental mechanisms to consolidate split entries at retrieval time. While doing so might have improved accuracy, we hypothesize that the difference would have been marginal. This is both because the vast majority of the entries did not require splitting, but also because our tests with long-context text-similarity models (such as <a href="https://huggingface.co/BAAI/bge-m3">BAAI/BGE-M3</a>) did not appear to yield significantly better results. 
+          </p>
+
+          <p>
+          The pipeline saves each vector in ChromaDB alongside a set of metadata, which is used to preserve the original context of each vector. This metadata object consists in the following properties:
+          </p>
+
+          <ul>
+            <li>
+              <strong>article_identifier</strong>:<br>
+              Unique identifier for the article, as defined by the LEGI dataset. This identifier always starts with the LEGIARTI prefix.
+            </li>
+            <li>
+              <strong>texte_nature</strong>:<br>
+              The “type” of the article. It could for example be part of a “code” (i.e: Code de la route), a “décret”, an “arrêté” …
+            </li>
+            <li>
+              <strong>texte_titre</strong>:<br>
+              Title of the article.
+            </li>
+            <li>
+              <strong>texte_ministere</strong>:<br>
+              The ministry where this article is coming from, if any.
+            </li>
+            <li>
+              <strong>text_chunk</strong>:<br>
+              Text excerpt that was encoded.
+            </li>
+          </ul>
+
+          <p>
+          The resulting vector store holds <strong>965 129 vectors for 838 396 articles</strong> and weighs ~11.62 GB.
+          </p>
+
+          <h3>Q&amp;A Pipeline</h3>
+
+          <figure>
+            <a href="https://lil-blog-media.s3.amazonaws.com/qanda-pipeline.webp">
+              <img 
+                src="https://lil-blog-media.s3.amazonaws.com/qanda-pipeline.webp" 
+                alt="Figure 2. Processing stages of the Q&A pipeline."/>
+            </a>
+
+            <figcaption>Figure 2. Processing stages of the Q&amp;A pipeline.</figcaption>
+          </figure>
+
+          <p>
+          We designed the Q&A pipeline to test a series of questions about French law with the following requirements:
+          </p>
+
+          <ul>
+            <li>Always in a zero-shot prompting scenario (no follow-up questions) at temperature 0.0.</li>
+            <li>Both in French and in English, as a way to test cross-language asymmetric semantic search.</li>
+            <li>With and without retrieving sources from the vector store, as a way to measure the impact of sources pulled from the RAG pipeline on the responses.</li>
+            <li>To be tested against both OpenAI’s GPT-4 and Meta’s Llama2-70B, two common models representative of both closed-source and open-source AI at the time of the experiment.</li>
+          </ul>
+
+          <p>
+          In order to retrieve sources from the vector store, the questions were encoded using the text-similarity model that was used to populate the vector store. The resulting vectors were then used to retrieve the 4 closest matches using cosine similarity. The metadata associated with each vector was used to populate the prompt passed to the text-generation model, provided as “context”.
+          </p>
+
+          <p>
+          Since this setup tested questions in two different languages and both with and without RAG, it used four different prompts. 
+          </p>
+
+          <details>
+            <summary><strong>Prompt 1: Question in English + NO RAG</strong></summary>
+
+<textarea disabled>
+You are a helpful and friendly legal assistant with expertise in French law.
+You are here to support American users trying to understand French laws and regulations. Your objective is to answer their question by providing relevant information about French laws. Your explanation should be easy to understand while still being accurate and detailed.
+
+Use your knowledge to answer the following QUESTION.
+
+QUESTION: {question}
+
+Helpful answer:
+</textarea>
+          </details>
+
+          <details>
+            <summary><strong>Prompt 2: Question in English + RAG</strong></summary>
+
+<textarea disabled>
+Here is CONTEXT:
+{context}
+----------------
+You are a helpful and friendly legal assistant with expertise in French law.
+You are here to support American users trying to understand French laws and regulations. Your objective is to answer their question by providing relevant information about French laws. Your explanation should be easy to understand while still being accurate and detailed.
+
+When possible, use the provided CONTEXT to answer the following QUESTION, but ignore CONTEXT if it is empty or not relevant.
+When possible and relevant, use CONTEXT to cite specific French law codes and articles.
+
+QUESTION: {question}
+
+Helpful answer:
+</textarea>
+          </details>
+
+          <details>
+            <summary><strong>Prompt 3: Question in French + NO RAG</strong></summary>
+
+<textarea disabled>
+You are a helpful and friendly legal assistant with expertise in French law.
+You are here to support American users trying to understand French laws and regulations. Your objective is to answer their question by providing relevant information about French laws. Your explanation should be easy to understand while still being accurate and detailed.
+
+Use your knowledge to answer the following QUESTION.
+
+QUESTION: {question}
+
+Helpful answer (in French):
+</textarea>
+          </details>
+
+          <details>
+            <summary><strong>Prompt 4: Question in French + RAG</strong></summary>
+
+<textarea disabled>
+Here is CONTEXT:
+{context}
+----------------
+You are a helpful and friendly legal assistant with expertise in French law.
+You are here to support American users trying to understand French laws and regulations. Your objective is to answer their question by providing relevant information about French laws. Your explanation should be easy to understand while still being accurate and detailed.
+
+When possible, use the provided CONTEXT to answer the following QUESTION, but ignore CONTEXT if it is empty or not relevant.
+When possible and relevant, use CONTEXT to cite specific French law codes and articles.
+
+QUESTION: {question}
+
+Helpful answer (in French):
+</textarea>
+          </details>
+
+          <p>
+          At processing time <strong>{question}</strong> was replaced by the question currently being asked, while <strong>{context}</strong> was replaced by the context retrieved from the vector store. 
+          </p>
+
+          <p>
+          Interoperable inference was mediated via <a href="https://github.com/BerriAI/litellm">LiteLLM</a>, which connects to the OpenAI API for inference on GPT-4, and to a local instance <a href="https://ollama.com/">Ollama</a> for inference on <a href="https://ollama.com/library/llama2:70b-chat-fp16">llama2-70b-chat-fp16</a>. All questions were asked to the model at temperature 0.0, in order to make the model’s response more deterministic.
+          </p>
+
+        </section>
+
+        <hr/>
+
+        <section id="experimental-set-up">
+          <h2>Experimental Set-up</h2>
+
+          <p>
+            <em><strong>Authored by:</strong> Kristi Mukk, Librarian</em>
+          </p>
+
+          <p>
+          We designed a set of ten questions from the perspective of a typical American user seeking answers on French legal matters. We chose to create these from scratch because the only existing French legal question answering dataset, the <a href="https://huggingface.co/datasets/maastrichtlawtech/lleqa">LLeQA dataset</a>, focuses on Belgian legislation rather than French law. In crafting these questions, we consciously avoided assuming any prior familiarity with legal concepts from either the French or American legal systems and we avoided using any specialized legal terminology in our prompts. The questions we used in our experiment spanned a spectrum of difficulty levels, ranging from straightforward queries that could be addressed within 1-2 legal codes, to those requiring nuanced legal classification or interpretation or even necessitating reference to case law or European Union law. Our questions also varied in specificity and type of legal task, ranging from broad exploratory inquiries intended for learning about a legal topic to precise, context-specific queries with an emphasis on factual recall. With these questions, we aimed to gain a clearer understanding of the types of inquiries that RAG-based tools might be best suited for. 
+          </p>
+
+          <p>
+          In accordance with our use case, we conducted minimal prompt engineering with these questions, role playing a typical user without deep legal domain expertise and refraining from presuming prior knowledge of prompt engineering best practices. However, we acknowledge that prompt sensitivity can be a potential issue in generating consistent results, as even slight alterations in the wording of a prompt can result in important variations in responses. In our experimental design, we did not account for prompt sensitivity, but future work could test against rephrased prompts for the same underlying question or breaking it up into several questions to gauge prompt sensitivity and its impact on results. It is important to note that prompt engineering in the context of legal question answering can be an exercise of issue spotting, so we acknowledge that legal experts are better equipped to design detailed prompts which may generate more precise and accurate responses.
+          </p>
+
+          <h3>Questions</h3>
+
+          <h4>Category 1: The answer is simple and in one code.</h4>
+
+          <ul>
+            <li>
+            🇺🇸 How long does it take for a vehicle left parked on the highway to be impounded?<br>
+            🇫🇷 Au bout de combien de temps un véhicule laissé en stationnement sur le bord de d'une route peut-il être mis en fourrière?
+            </li>
+          </ul>
+
+          <h4>Category 2: The answer is in one code but the answer requires being able to read a table.</h4>
+
+          <ul>
+            <li>
+            🇺🇸 Identify if an impact study is needed to develop a campsite.?<br>
+            🇫🇷 Identifie si une étude d’impact est nécessaire pour ouvrir un camping.
+            </li>
+
+            <li>
+            🇺🇸 Explain whether any environmental authorization is needed to develop a rabbit farm.<br>
+            🇫🇷 Identifie et explique si une autorisation environnementale est nécessaire pour ouvrir une ferme de lapins
+            </li>
+          </ul>
+
+          <h4>Category 3: The answer is spread in two codes.</h4>
+
+          <ul>
+            <li>
+            🇺🇸 Who should compensate for damage to a maize field caused by wild boar?<br>
+            🇫🇷 Qui a l'obligation de réparer les dommages causés à un champ de maïs par des sangliers sauvages?
+            </li>
+          </ul>
+
+          <p>
+            <strong>Category 4: The legal classification of facts is not obvious.</strong>
+          </p>
+
+          <ul>
+            <li>
+            🇺🇸 Can a cow be considered as real estate?<br>
+            🇫🇷 Une vache peut-elle être considérée comme un immeuble?
+            </li>
+          </ul>
+
+          <h4>Category 5: Part of the answer lies in EU Law.</h4>
+          
+          <ul>
+            <li>
+            🇺🇸 Is it legal for a fisherman to use an electric pulse trawler? <br>
+            🇫🇷 Est-il légal d'utiliser un chalut électrique?
+            </li>
+          </ul>
+
+          <h4>Category 6: Broad exploratory inquiry.</h4>
+
+          <ul>
+            <li>
+            🇺🇸 List the environmental principles in environmental law.<br>
+            🇫🇷 Liste les principes du droit de l’environnement.
+            </li>
+
+            <li>
+            🇺🇸 Identify and summarize the provisions for animal well-being.<br>
+            🇫🇷 Identifie et résume le droit du bien être animal.
+            </li>
+
+            <li>
+            🇺🇸 Identify and summarize the provisions for developing protected areas in environmental law.<br>
+            🇫🇷 Identifie et résume le droit applicable à la création d’aires protégées en droit de l’environnement.
+            </li>
+          </ul>
+
+          <h4>Category 7: Part of the answer lies in case law.</h4>
+
+          <ul>
+            <li>
+            🇺🇸 Is it legal to build a house within one kilometer of the coastline?<br>
+            🇫🇷 Est-il légal de construire une maison à un kilomètre du rivage?
+            </li>
+          </ul>
+
+          <p>
+          While we recognize our experimental scope and small sample size has limitations, the results we found are encouraging and indicate that the system performs as expected and is suitable for further experimentation.
+          </p>
+
+          <h3>Evaluation Criteria</h3>
+
+          <p>
+          It is crucial for domain experts to actively participate in the development of evaluation tasks and criteria. Betty assessed the model’s responses using similar criteria and evaluative approach that is employed when evaluating the work of law students. Evaluation can be time-consuming, but we aimed to adopt a holistic framework that examined correctness, faithfulness to the provided context, answer relevancy, and context precision and recall. We analyzed the resulting output based on the following criteria, inspired by the work of <a href="https://arxiv.org/abs/2311.04694">Gienapp et al.</a>: 
+          </p>
+
+          <ul>
+            <li>
+              <strong>Coherence/clarity:</strong> Manner in which the response is structured and presents both logical and stylistic coherence, and expressed in a clear and understandable manner.
+            </li>
+            <li>
+              <strong>Coverage:</strong> Extent to which the presented information addresses the user’s information need with the appropriate level of detail and informativeness.
+            </li>
+            <li>
+              <strong>Consistency:</strong> Whether the response is free of contradictions and accurately reflects the information the system was provided as context.
+            </li>
+            <li>
+              <strong>Correctness:</strong> Whether the response is within the correct legal domain, factually accurate, and reliable.
+            </li>
+            <li>
+              <strong>Context relevance:</strong> The relevance of the context added to the prompt as a result of vector-search on the knowledge base, and whether any references are cited within the response itself. 
+            </li>
+            <li>
+              <strong>Adherence to context:</strong> Whether and how the response utilizes and references the provided context.
+            </li>
+            <li>
+              <strong>Translation:</strong> Whether any legal terms were translated from French inaccurately or without fully encompassing their intended meaning. 
+            </li>
+            <li>
+              <strong>Other response quality metrics:</strong> Whether the response contains hedging language or hallucinations.
+            </li>
+          </ul>
+
+        </section>
+
+        <hr/>
+
+        <section id="analysis">
+
+          <h2>Analysis</h2>
+
+          <p>
+            <em><strong>Authored by:</strong> Betty Queffelec, Legal Scholar (France)</em>
+          </p>
+
+          <p>
+          To analyze responses, we first examined the sources mentioned within the response itself and the retrieved excerpts. Next, we investigated different kinds of inaccuracies and “hallucinations”. Following this, we highlighted how responses might offer new or complementary ideas and insights. Finally, we addressed some translation issues. 
+          </p>
+
+          <h3>Challenges in Source Retrieval and Presentation</h3>
+
+          <p>
+          The connection between models and sources held particular significance in our analysis, as in legal science—similar to other fields—the argumentation process that led to a conclusion is as crucial as the conclusion itself. This process enables the user to evaluate the strength of an answer, while legal bases (the rule of law that guides or supports a certain solution or upon which another legal text is based) provide evidence supporting the argument. We examined how frequently sources are mentioned in the responses, the types of sources mentioned, and whether the sources were relevant or hallucinated. 
+          </p>
+
+          <ul>
+            <li>
+              <strong>Responses with RAG<br>(English and French, GPT-4 and Llama 2):</strong><br>
+              Overall: 14 out of 40 responses mentioned sources not included in the retrieved excerpts, while 26 out of 40 responses mentioned the retrieved excerpts.
+            </li>
+
+            <li>
+              <strong>Responses without RAG<br>(English and French, GPT-4 and Llama 2):</strong><br>
+              23 out of 40 responses included sources.
+            </li>
+          </ul>
+
+          <p>
+          Among the 80 total responses, all the sources mentioned were legal bases such as codes, laws, decrees, and arrêtés. In addition, mentioned sources included a constitutional-level text, the Environmental Charter and European Union legislation, though these instances were quite rare. However, there were no references to legal scholarship, guidelines, or administrative reports, although modifying the prompt to instruct the model to incorporate these additional sources might have yielded different results. Our dataset did not contain any case law, and we observed that case law did not appear in any response, even if a correct response required analyzing case law. 
+          </p>
+
+          <ul>
+            <li>
+              <strong>Are sources relevant?</strong><br>
+              In order to determine if mentioned sources were relevant, we first analyzed responses produced by models using RAG, then we analyzed responses produced by models using no RAG. 
+            </li>
+
+            <li>
+              <strong>If models use RAG: Are the excerpts relevant?</strong><br>
+              There are 40 responses with RAG and 4 retrieved excerpts provided for each response. For responses with RAG, 114 out of 160 excerpts were irrelevant.
+            </li>
+          </ul>
+
+          <p>
+          We noticed that the excerpts were often out of context. For example, responses to the question “List the environmental principles in environmental law” (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=3:3">GPT-4/English/RAG</a>, and <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=4:4">Llama-2/English/RAG</a>). The correct sources can be found in the Environmental Charter and Environmental code. However, the pipeline retrieved provisions from the Education code, a decree about wine, a ministerial order about the competitive exam for forensic police, and a ministerial order about the calendar to apply for a Master‘s degree. Sometimes the RAG pipeline failed to identify a proper provision and retrieve relevant text.
+          </p>
+
+          <p>
+          Sometimes, the model found a source close to the proper source, but  still failed to select a relevant one. For instance, in response to the question “Identify if an impact study is needed to develop a campsite” (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=5:5">Llama-2/English/RAG</a>), the excerpt retrieved was a valid source (Article D331-2 of the Tourism code). But when the same question was asked in French (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=6:6">GPT-4/French/RAG</a>), it retrieved two articles in the same code (Article D331-4 of the Tourism code), which are provisions about sanitary issues which are out of context.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Did the response itself have language pointing to “context” i.e. the retrieved excerpts?</strong><br>
+              Only 9 out of 40 responses with RAG had language pointing to the excerpts.
+            </li>
+          </ul>
+
+          <p>Sometimes, the mention of “context” by the model can be particularly confusing. To keep the same campsite example as above, the model begins its response with this statement:</p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=6:6">GPT-4/French/RAG</a>: “D'après les extraits de loi fournis, il n'est pas mentionné qu'une étude d'impact est nécessaire pour ouvrir un camping en France.”<br><br>
+
+          (Translation by GPT-4o: “According to provided excerpts of the law, it is not mentioned that an impact study is necessary to open a campsite in France.”)
+          </blockquote>
+
+          <p>
+          Conversely, the model sometimes excluded irrelevant excerpts and only used the relevant ones to build its response. For instance, in response to the question “Who should compensate for damage to a maize field caused by wild boar?” the model concluded its response with the following: 
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=7:7">GPT-4/English/RAG</a>: “However, the excerpts provided in the context do not directly address this issue...” 
+          </blockquote>
+
+          <h4>How often are excerpts ignored when they are irrelevant?</h4>
+
+          <p>
+          38 responses included at least 1 irrelevant excerpt across both models in French and English. 114/160 retrieved excerpts were irrelevant, although the model ignored irrelevant excerpts a bit less than half the time. Overall, GPT-4 did a better job than Llama2-70B at ignoring relevant excerpts in its response. 
+          </p>
+
+          <p>
+          Responses tended to be out of context and incoherent when the model did not ignore irrelevant excerpts. For instance, in response to “Is it legal for a fisherman to use an electric pulse trawler?” (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=8:8">Llama-2/French/RAG</a>), the model built its response upon the four excerpts which were completely off-topic. If the statements themselves weren’t inherently false, the response lacked coherence by focusing primarily on irrelevant issues. 
+          </p>
+
+          <h4>Are the excerpts used when relevant?</h4>
+
+          <p>
+          Some relevant excerpts were properly used, but the realm is quite complex. For instance, in response to “How long does it take for a vehicle left parked on the highway to be impounded?”  (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=9:9">GPT-4/English/RAG</a>; and <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=10:10">Llama-2/English/RAG</a>), both models adequately mentioned the first two excerpts, although GPT-4’s response was clearer. Then, GPT-4 ignored the third one, which is irrelevant because it is only applicable to motorbikes, while Llama 2 didn’t ignore it, which led to an intrinsic hallucination about a 48-hour deadline. Finally, both models ignored the last excerpt, Article L417-13 of the Code de la route (Highway code), which is a provision that refers to a specific case of obstructive parking. It could have been part of a very detailed response, but as such, we would not expect the model to mention it in the response. However, the model could have elaborated more broadly about the obstructive parking (Article R417-9 of the Highway code and following provisions).
+          </p>
+
+          <p>
+          We observed that a model could retrieve a valid source in its excerpts and ignore it in its response, while also adding wrong or hallucinatory sources to the response. For example, in response to “Explain whether any environmental authorization is needed to develop a rabbit farm”: 
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=11:11">Llama-2/English/RAG</a>: “Environmental authorization is required to develop a rabbit farm in France, according to the Code de l'Environnement. Specifically, pursuant to Article R. 511-2 of the Code de l'Environnement, any project involving the installation or expansion of an animal husbandry operation, including a rabbit farm, must obtain an environmental authorization...” 
+          </blockquote>
+
+          <h4>Are the excerpts properly used when relevant? The question of intrinsic “hallucinations”</h4>
+
+          <p>
+          “Hallucinations”, elements “made up” by the models, occurred less frequently with RAG. However, the retrieved excerpts also contributed to intrinsic hallucinations, which occur when the model wrongly modifies information from excerpts. 
+          </p>
+
+          <h5>Responses with RAG (English and French).</h5>
+
+          <ul>
+            <li><strong>Overall</strong>: 13 out of 40 responses (32.5%) contained hallucinations</li>
+            <li><strong>Intrinsic hallucinations</strong>: 8 out of 40 responses</li>
+            <li><strong>Extrinsic hallucinations</strong>: 5 out of 40 responses</li>
+            <li><strong>GPT-4</strong>: 3 out of 20 responses contained hallucinations</li> 
+            <li><strong>Llama 2</strong>: 10 out of 20 responses contained hallucinations</li>
+          </ul>
+
+          <h5>Responses without RAG (English and French):</h5>
+
+          <ul>
+            <li><strong>Overall</strong>: 23 out of 40 responses (57.5%) contained hallucinations</li>
+          </ul>
+
+          <p>
+          For both models with RAG, a substantial part of hallucinations were intrinsic stemming from irrelevant excerpts and significantly contributed to inaccuracies in the responses. However, the small number of occurrences, especially for GPT-4 (only 3 responses with hallucinations) requires cautiousness in conclusions.
+          </p>
+
+          <p>
+            <strong>Given our limited scope and small sample size, we must be cautious in drawing conclusions, but it appears that a general reduction in hallucinations does not correlate with more accurate responses.</strong> 
+          </p>
+
+          <p>
+          While responses often appeared plausible, fluent, and informative, models frequently retrieved irrelevant documents, included citation hallucinations, and contained inaccuracies. Additionally, the models tended to provide lengthy responses that included extraneous information beyond the scope of the user’s information need. Our analysis indicated that models and RAG pipelines struggle with source retrieval and presentation, hindering the user’s ability to verify output effectively. 
+          </p>
+
+          <p>
+          We recognize that a limitation of our study is that a more granular analysis might have been conducted to determine whether relevant sources were closely aligned with the specific question or merely tangentially related. Additionally, we did not systematically evaluate whether the excerpts were utilized effectively when deemed relevant. 
+          </p>
+
+          <h4>Without RAG</h4>
+
+          <p>
+          Although we did not explicitly ask models not using RAG to cite sources, sources were mentioned in just over half of the responses without RAG. 
+          </p>
+
+          <ul>
+            <li>
+              <strong>All responses without RAG</strong>: 23 out of 40 responses included sources (English and French, GPT-4 and Llama 2).
+            </li>
+          </ul>
+
+          <p>
+            <em>Out of the 17 responses with no sources mentioned:</em>
+          </p>
+
+          <ul>
+            <li><strong>GPT-4</strong>: 9 responses with no sources</li>
+            <li><strong>Llama 2</strong>: 8 responses with no sources</li>
+          </ul>
+
+          <p>
+            <em>When sources are mentioned: </em>
+          </p>
+
+          <ul>
+            <li><strong>GPT-4</strong>: 1 source is incorrect in only 1 response</li>
+            <li><strong>Llama 2</strong>: At least 1 source is incorrect in 8 responses</li>
+          </ul>
+
+          <p>
+          For instance, in response to the question “How long does it take for a vehicle left parked on the highway to be impounded?” (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=12:12">Llama-2/French/NoRAG</a>) the response mentioned articles R. 318 et suivants du Code de la route. However, although the correct answer is in the Code de la route, Article R. 318 doesn’t exist and R. 318-1 is about something else. Another example in response to the question “Identify and summarize the provisions for animal well-being” (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=13:13">Llama-2/French/NoRAG</a>), the response mentioned the Code de la santé animale (Animal Health code) and the Code de l'environnement (Environmental code) as sources. But, the Animal Health code doesn't exist and the main source, Code rural et de la pêche maritime (Rural and Maritime Fisheries code), is absent.  
+          </p>
+
+          <p>
+          See our <a href="https://docs.google.com/document/d/1cFg4xRu4U1f4iYINagKtTMVsVb7O3nGMJdw-jl0Y6ng/edit?usp=sharing">No RAG source evaluation appendix</a> for further examples. 
+          </p>
+
+          <h3>Accuracy and hallucinations</h3>
+
+          <p>We evaluated responses for accuracy using the following three-level scale:</p>
+
+          <ul>
+            <li>
+              <strong>Completely accurate</strong>: The response is entirely free of factual errors. (Note: Completely accurate does not necessarily mean complete).
+            </li>
+            <li>
+              <strong>Partially accurate</strong>: The response contains some accurate information, but there are noticeable factual errors or areas where additional clarification is needed. Improvements are necessary for increased accuracy.
+            </li>
+            <li>
+              <strong>Inaccurate</strong>: The response includes significant factual errors that could mislead or provide incorrect information. It lacks accuracy and should be revised for better reliability.
+            </li>
+          </ul>
+
+          <h4>Factual Correctness: Most responses are partially accurate</h4>
+
+          <figure>
+            <a href="https://lil-blog-media.s3.amazonaws.com/factual-correctness-01.webp">
+              <img 
+                src="https://lil-blog-media.s3.amazonaws.com/factual-correctness-01.webp" 
+                alt="Figure 3. Factual correctness. Bar plot, breakdown of all responses by model and correctness."/>
+            </a>
+
+            <figcaption>Figure 3. Factual correctness. Bar plot, breakdown of all responses by model and correctness.</figcaption>
+          </figure>
+
+          <p>Across all responses (GPT-4 and Llama 2, English and French, RAG and no RAG).</p>
+
+          <p><em>Overall:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 8 out of 80 responses (10%)</li>
+            <li><strong>Partially accurate</strong>: 62 out of 80 responses (77.5%)</li>
+            <li><strong>Inaccurate</strong>: 10 out of 80 responses (12.5%)</li>
+          </ul>
+
+          <p><em>Llama 2:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 0 out of 40 responses.</li>
+            <li><strong>Partially inaccurate</strong>: 31 out of 40 responses.</li>
+            <li><strong>Inaccurate</strong>: 9 out of 40 responses.</li>
+          </ul>
+
+          <p><em>GPT-4:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 8 out of 40 responses.</li>
+            <li><strong>Partially accurate</strong>: 31 out of 40 responses.</li>
+            <li><strong>Inaccurate</strong>: 1 out of 40 responses.</li> 
+          </ul>
+
+          <p>
+          Our results indicate that while the use of RAG may enhance the accuracy and relevance of responses, it also introduced additional complexity and potential for errors. While RAG increased the number of completely accurate responses, it also increased the number of completely inaccurate responses.
+          </p>
+
+          <figure>
+            <a href="https://lil-blog-media.s3.amazonaws.com/factual-correctness-02.webp">
+              <img 
+                src="https://lil-blog-media.s3.amazonaws.com/factual-correctness-02.webp" 
+                alt="Figure 4. Factual correctness. Bar plot, breakdown of NO RAG responses by model and correctness."/>
+            </a>
+
+            <figcaption>Figure 4. Factual correctness. Bar plot, breakdown of NO RAG responses by model and correctness.</figcaption>
+          </figure>
+
+          <p>Responses without RAG (English and French).</p>
+          
+          <p><em>Overall:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 2 out of 40 responses (5%)</li>
+            <li><strong>Partially accurate</strong>: 35 out of 40 responses (87.5%)</li>
+            <li><strong>Inaccurate</strong>: 3 out of 40 responses (7.5%)</li>
+          </ul>
+
+          <p><em>Llama 2:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 0 out of 20 responses.</li>
+            <li><strong>Partially inaccurate</strong>: 17 out of 20 responses.</li>
+            <li><strong>Inaccurate</strong>: 3 out of 20 responses.</li> 
+          </ul> 
+
+          <p><em>GPT-4:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 2 out of 20 responses.</li> 
+            <li><strong>Partially accurate</strong>: 18 out of 20 responses.</li>
+            <li><strong>Inaccurate</strong>: 0 out of 20 responses.</li>
+          </ul>
+
+          <figure>
+            <a href="https://lil-blog-media.s3.amazonaws.com/factual-correctness-03.webp">
+              <img 
+                src="https://lil-blog-media.s3.amazonaws.com/factual-correctness-03.webp" 
+                alt="Figure 5. Factual correctness. Bar plot, breakdown of RAG responses by model and correctness."/>
+            </a>
+
+            <figcaption>Figure 5. Factual correctness. Bar plot, breakdown of RAG responses by model and correctness.</figcaption>
+          </figure>
+
+          <p>Responses with RAG (English and French).</p>
+
+          <p><em>Overall:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 6 out of 40 responses (15%)</li>
+            <li><strong>Partially accurate</strong>: 27 out of 40 responses (67.5%)</li>
+            <li><strong>Inaccurate</strong>: 7 out of 40 responses (17.5%)</li>
+          </ul>
+
+          <p><em>Llama 2:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 0 out of 20 responses</li>
+            <li><strong>Partially inaccurate</strong>: 14 out of 20 responses.</li>
+            <li><strong>Inaccurate</strong>: 6 out of 20 responses.</li>  
+          </ul>
+
+          <p><em>GPT-4:</em></p>
+
+          <ul>
+            <li><strong>Completely accurate</strong>: 6 out of 20 responses.</li>
+            <li><strong>Partially accurate</strong>: 13 out of 20 responses.</li>
+            <li><strong>Inaccurate</strong>: 1 out of 20 responses.</li>
+          </ul>
+
+          <p>
+          In our analysis, we noted the prevalence of partially inaccurate responses that mix true and false statements, along with different types of inaccuracies. For the majority of responses, there were a mix of true and false elements, in addition to elements that were out of scope of the user’s information need. For example, in response to “Identify if an impact study is needed to develop a campsite”:
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=14:14">Llama-2/French/NoRAG</a>: “Selon l'article R.123-10 du Code de l'environnement, un camping est considéré comme une installation touristique qui nécessite une déclaration préalable auprès de la direction départementale des Territoires et de la Mer (DDTM) ou de la mairie, en fonction de la taille de l'installation”.<br><br>
+
+          Translation by GPT-4o: “According to Article R.123-10 of the Environmental code, a campsite is considered a tourist facility that requires a prior declaration to the Departmental Directorate of Territories and the Sea (DDTM) or the town hall, depending on the size of the facility.”
+          </blockquote>
+
+          <p>
+          First, the provision of Article R. 123-10 of the Environmental code is not referring to camping or touristic installation, but to public enquiry’s time and location. Second, the reference to “prior declaration” could come from spatial planning law. Article L443-1 of the <em>Code de l’urbanisme</em> (Urban Planning code) states <em>“La création d'un terrain de camping d'une capacité d'accueil supérieure à un seuil fixé par décret en Conseil d'Etat est soumise à permis d'aménager”</em> (translation by GPT-4o: <em>“The creation of a campsite with an accommodation capacity exceeding a threshold set by decree of the Council of State requires a development permit”</em>). Below the Decree defined threshold, a prior declaration is needed. But, this prior declaration or permit should be submitted to the town hall, not to the Departmental Directorate of Territories and the Sea (DDTM) which is a public service of the central State. Normally, this latter public service doesn’t receive applications for spatial planning permit or prior declaration. Third, this statement does not directly address the issue of impact studies. 
+          </p>
+
+          <h4>Exploring the nature of inaccuracies</h4>
+
+          <p>
+          We analyzed the occurrence and nature of hallucinations, assessed the capacities and limits of models in navigating legal systems, and explored how approximations limited precise understanding of the rules. 
+          </p>
+
+          <h5>Is there a high rate of hallucinations?</h5>
+
+          <p>
+          In this study, we distinguished between interpretation mistakes, accuracy failures, and hallucinations. We mentioned hallucinations only when the model “created” something new which doesn’t exist based in the provided context (intrinsic) or not (extrinsic). To note, intrinsic hallucinations were mainly addressed above (in the first part of the analysis dedicated to sources). 
+          </p>
+
+          <p>
+          Overall, in the context of our experiment, the incidence of hallucinations was reduced by RAG. 27/40 responses with RAG had no hallucinations present, while 17/40 responses without RAG had no hallucinations present. In our tests, RAG especially reduced hallucinations when combined with GPT-4. As mentioned earlier, most hallucinations were extrinsic and involved legal references which do not exist. For example, in response to “Is it legal to build a house within one kilometer of the coastline?”, <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=15:15">Llama-2/English/NoRAG</a> mentions a “limite de servitude (service limit)". The notion of servitude exists, but a “servitude limit” doesn’t make sense in this context and the quotation is wrong. Similarly, in response to “Identify if an impact study is needed to develop a campsite”, the response wrongly mentions a rule that doesn’t exist: 
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=16:16">GPT-4/English/NoRAG</a>: "For campsites, an impact study is generally required if the campsite will have more than 20 camping spots or if it will cover an area of more than 1 hectare (approximately 2.47 acres)" 
+          </blockquote>
+
+          <p>
+          <strong>Verifying responses and checking for hallucinations requires a strong understanding of legal rules and of the underlying legal system.</strong> For example, analyzing possible partial liability to assess responses to the question “Who should compensate for damage to a maize field caused by wild boar?”. This can be a very time consuming task, especially when sources are irrelevant or missing. As in other sciences, demonstrating the non-existence of something can be challenging. Indeed, for an expert, the model might present an interesting possibility that you did not identify, even if it could ultimately prove to be a dead end. However, for a novice, it could mislead them into believing in the existence of a hallucinated rule or cause them to focus their answer on a secondary issue that is not as relevant. As mentioned above, a substantial part of the inaccuracies come from the system’s partial failure to identify, retrieve, analyze and make sense of sources.
+          </p>
+
+          <h5>Global coherence vs detailed scope: Do models think like lawyers?</h5>
+
+          <p>
+          Typically, responses correctly defined the legal domain, were logically coherent, and stayed within the scope of the question (topical correctness). This context created the conditions for a credible response. Conversely, inaccuracies often arose from the model’s difficulty in properly determining the scope of rules.
+          </p>
+
+          <h5>Are responses credible?</h5>
+
+          <p>
+          Both models correctly identified the correct legal domain in responses both with and without RAG 90% of the time (36 out of 40 responses). With our particular setup and questions, we did not observe a correlation between hallucinations, factual correctness, and identification of the legal domain. 
+          </p>
+
+          <p>
+          Similarly, when evaluating topical correctness, responses from both models, with and without RAG, typically fell within the scope of the question. Although the responses with RAG contained a larger percentage of responses that were not within the scope of the question. 
+          </p>
+
+          <h3>Logical Coherence</h3>
+
+          <p>Finally, we evaluated the logical coherence of the responses.</p>
+
+          <p><em>Responses with RAG (English and French):</em></p>
+
+          <ul>
+            <li><strong>Overall</strong>: 28 out of 40 responses (70%) were logically coherent.</li>
+            <li><strong>GPT-4</strong>: 18 out of 20 responses were logically coherent.</li>
+            <li><strong>Llama 2</strong>: 10 out of 20 responses were logically coherent.</li>
+          </ul>
+
+          <p><em>Responses without RAG (English and French):</em></p> 
+
+          <ul>
+            <li><strong>Overall</strong>:: 35 out of 40 responses (88%) were logically coherent.</li> 
+            <li><strong>GPT-4</strong>:: 19 out of 20 responses were logically coherent.</li>
+            <li><strong>Llama 2</strong>:: 16 out of 20 responses were logically coherent.</li>
+          </ul> 
+
+          <p>
+          We observed that responses without RAG were generally more logically coherent, and GPT-4 was generally more logically coherent in that specific context compared to Llama 2. 
+          </p>
+
+          <p>
+          See for example  the model’s response to “Is it legal for a fisherman to use an electric pulse trawler?” in which the response elaborated about the regulations and restrictions for electric skateboard use. 
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=17:17">Llama-2/French**/NoRAG</a>: “...generally legal to use an electric skateboard in France, but there are some restrictions and regulations you should be aware of. Firstly, it's important to note that electric skateboards are considered as "véhicules de transport individuel" (personal transport vehicles) by the French authorities. As such, they are subject to certain rules and regulations, such as the obligation to wear a helmet and follow traffic laws…”<br><br>
+
+          **Note: While this question was asked in French and the prompt includes instructions for the model to respond in French, the model provided a response partially in English. 
+          </blockquote>
+
+          <p>
+          This was an obvious mistake, and even a novice can see that the model’s response is incorrect. However, the response above was an exception, and does not reflect the majority of responses, which were generally topically correct and within the correct legal domain. 
+          </p>
+
+          <p>
+          Logical coherence is essential because it helps users evaluate the response and calibrate their trust. A well-structured response enables users to easily follow the model’s “reasoning” and evaluate credibility. Conversely, inaccuracies in responses often arise from the model’s difficulty in properly determining the scope of rules, which is to say developing a proper legal “reasoning”. 
+          </p>
+
+          <h5>Models struggle in determining the scope of rules</h5>
+
+          <p>
+          Asking a question about French law requires the model to properly apply legal scopes and categories. This may be more difficult with civil law compared to common law.
+          </p>
+
+          <p>
+          We observed some level of categorization in the responses. For example, in the response below to the question “Identify and summarize the provisions for animal well-being”, special attention is paid to the different categories of animals: 
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=18:18">GPT-4/English/RAG</a>: “...Furthermore, there are specific provisions for the treatment of pets, farm animals, and animals used in scientific research. For example, it is illegal to abandon pets, and farm animals must be provided with adequate food and water. Animals used in scientific research must be treated in a way that minimizes their suffering…”
+          </blockquote>
+
+          <p>
+          We observed that errors in responses often arise from the models’ inability to properly determine material, geographical and temporal scope of rules. For example, the question <em>“Can a cow be considered as real estate?”</em> was specifically designed to test the models’ abilities to understand the material scope of rules. Finding the correct answer is tricky. Cows are animals and for a long time were categorized as mainly part of <em>“biens meubles”</em> (movable property) in the Civil code. However, cows needed for the exploitation of a farm can be considered as <em>“immeuble par destination”</em> (even if it’s becoming rare from an economical point of view nowadays). The law considers it as real estate and therefore applies the real estate legal regime in such contexts as sale or legacy (Article 524 of the Civil code). Moreover, the Civil code was modified in 2015 to mention that animals are sentient living beings. Subject to protecting laws, animals are subject to property legal regimes (<em>“Les animaux sont des êtres vivants doués de sensibilité. Sous réserve des lois qui les protègent, les animaux sont soumis au régime des biens”</em>; translation by GPT-4o: <em>“Animals are living beings with sensitivity. Subject to the laws that protect them, animals are governed by the regime applicable to property.”</em>). So, animals are not properties as such but the property legal regime applies to them (accordingly, a human can still own an animal). This nuance was introduced in the framework of animal rights. 
+          </p>
+
+          <p>
+          Neither of the models mentioned this nuance. Most responses stated that cows are <em>“biens meubles”</em> (movable property) and cannot be considered as real estate, except for this <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=19:19">GPT-4/French/No RAG</a> response. To note, <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=20:20">GPT-4/English/RAG</a> used Article R143-2 of the Code rural et des pêches maritimes (Rural and Maritime Fisheries code) and stated that cows cannot be considered as real estate. This was incorrect, since the scope of this provision is limited to the application of another provision, Article L143-1 of the same code dedicated to preemptive right. 
+          </p>
+
+          <p>
+          Another example, for the question <em>“Identify if an impact study is needed to develop a campsite”</em> <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=21:21">GPT-4/English/RAG</a> and <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=22:22">Llama-2/English/RAG</a> both ignored a restriction to the provision mentioned in the embedding: the impact study is required <em>“lorsque celle-ci est requise en application [de]”</em> (if it is subject to the requirements of) Articles R. 122-2 and R. 122-3 of the <em>Code de l'environnement</em> (Environmental code). 
+          </p>
+
+          <p>
+          More broadly, for the question <em>“Is it legal to build a house within one kilometer of the coastline?”</em>, the response (<a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=23:23">GPT-4/English/NoRAG</a>) mixed risk management and littoral law rules in a confusing way. The model should have presented the littoral law provision about different kinds of areas close to the sea. Developments about risk management could have completed the response but only at a later stage. 
+          </p>
+
+          <p>
+          For the same question, the response below shows the impact of an out of scope embedding that was retrieved and used as a basis for the response:
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=24:24">Llama-2/English/RAG</a>: “...if the construction is part of a schéma de cohérence territoriale (a comprehensive plan for urban development) and is located in a commune that is more than 15 kilometers from the coastline or the outer boundary of a metropolitan area with a population of over 15,000, then it may be allowed…”
+          </blockquote>
+
+          <p>
+          The model wrongly modifies the material scope of a provision by applying its geographical scope in order to address the question and it also did not adhere to the temporal scope of the provision, which was only until December 31, 2016. 
+          </p>
+
+          <p>
+          Other responses to this question applied provisions only applicable to outer sea territories (<a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=25:25">GPT-4/English/RAG</a>) or to lakes without mentioning it (<a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=26:26">Llama-2/French/RAG</a>).
+          </p>
+
+          <p>
+          Another kind of mistake associated with inadequate retrieval or interpretation of embeddings occurs when the scope is too specific. For example, the responses to: <em>“Explain whether any environmental authorization is needed to develop a rabbit farm.”</em> Both Llama 2 and GPT-4, when asked in French and in English, extracted provisions belonging to ministerial orders (arrêtés) detailing technical rules to respect in farm exploitation. For instance, the following response: 
+          </p>
+
+          <blockquote>
+          <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=27:27">GPT-4/English/RAG</a>: “Yes, according to French law, environmental authorization is needed to develop a rabbit farm. This is outlined in the "Arrêté du 31 octobre 2006 fixant les règles techniques auxquelles doivent satisfaire les élevages de lapins soumis à autorisation au titre du livre V du code de l'environnement". This decree sets the technical rules that rabbit farms must comply with and these farms are subject to authorization under Book V of the Environmental code.<br><br>
+
+          The decree also specifies that the operator must take appropriate measures to integrate the farm into the landscape. The farm must comply with the provisions of the decree of January 23, 1997, which relates to limiting noise emitted into the environment by facilities classified for environmental protection. The buildings must be properly ventilated and the operator must take appropriate measures to mitigate emissions of odors, gases, or dust that could create neighborhood nuisances.<br><br>
+
+          In other words, the development of a rabbit farm in France requires an environmental authorization that ensures the farm meets certain technical and environmental standards.”
+          </blockquote>
+
+          <p>
+          One ministerial order pertains to farms needing a declaration, and another to those requiring authorization. While topical, these provisions are too specific, preventing the models from inferring the overall legal framework. Rabbit farms belong to the legal regime of facilities classified for environmental protection (<em>installations classées pour la protection de l’environnement</em>, ICPE). Depending on the thresholds detailed in the Environmental code (such as the number of rabbits), an authorization or a declaration can be required. 
+          </p>
+
+          <p>
+          These examples demonstrate that models may struggle with determining the scope of rules from a material, geographical, and temporal point of view. This is a core skill of lawyers and a significant limitation of the responses provided by models. 
+          </p>
+
+          <h5>Approximations limit a proper understanding of the rules</h5>
+
+          <p>
+          Another kind of inaccuracy was approximations in responses. Models sometimes reformulated legal rules, which resulted in a failure to provide a precise and suitable response. Responses to the question “List the environmental principles in environmental law” were a good example of this. While all of the responses more or less rephrased the environmental principles, the result is that the user doesn’t know precisely the content of each principle. However, this could be a limitation of the current prompt wording, which uses “list” instead of a verb like “explain” that suggests the need for more details. Many of the responses to this question also added non-existent principles (for instance, the principle of waste management—legal rules exist about this issue but it is not a principle as such).
+          </p>
+
+          <p>
+          A second type of approximation can be found in conclusions drawn too hastily. For instance, responses to the question “Is it legal to build a house within one kilometer of the coastline?” focused on the 100-meters strip rule prohibiting buildings (with some exceptions). The best responses concluded that 1 km from the shore is out of this strip, so, in principle, it’s legal to build a house (if spatial planning and security issues allow it). All responses missed the “areas close to sea” notion, where urbanism is limited according to littoral law.
+          </p>
+
+          <h3>Summary: Which technical characteristics show better performance regarding accuracy and relevance?</h3>
+
+          <p>With our experimental setup and analysis criteria, we identified the following trends in our study.</p>
+
+          <p><strong>Performance Comparison: English vs. French</strong></p>
+
+          <ul>
+            <li>English questions showed slightly better performance compared to French questions, although RAG helped mitigate this difference. Both models performed better in English than in French.</li>
+          </ul>
+
+          <p><strong>Impact of RAG</strong></p>
+
+          <ul>
+            <li>While the use of RAG enhanced the accuracy and relevancy of some responses, it also introduced additional complexity and potential for errors.</li>
+            <li>Incorporating RAG improved the system’s performance in both English and French.</li>
+            <li>Improvement with RAG was more notable with Llama2-70B, indicating that RAG compensated for Llama 2’s lower baseline performance compared to GPT-4 in this particular experiment.</li>
+          </ul>
+
+          <p><strong>Model Comparison: GPT-4 vs. Llama2-70B</strong></p>
+
+          <ul>
+            <li>GPT-4 (with and without RAG) consistently outperformed Llama2-70B in both English and French. GPT-4 tended to perform better in terms of accuracy. Performance gap is more pronounced in French.</li>
+            <li>The combination of GPT-4 with RAG yielded the best overall performance in terms of accuracy and relevance.</li>
+          </ul>
+
+          <h3>LLMs as a Source of Ideas and Insights</h3>
+
+          <p>Users can leverage the strengths of LLMs for various purposes including idea generation, brainstorming, uncovering forgotten or unfamiliar information, or gaining insights for more extensive research.</p>
+
+          <h4>LLMs can facilitate exploring a corpus or finding information you might have forgotten or overlooked</h4>
+
+          <p>
+          Models can serve as a valuable starting point for exploration and inquiry. Given the extensive scope of our knowledge base, comprising over 800,000 French law articles, leveraging RAG with LLMs is helpful as a discovery, summarization, and sense-making tool. However, responses occasionally contained peripheral information that is not necessarily directly relevant to the primary query. To effectively answer a legal question, it is often essential to focus on the core issue and leave aside supplementary details. For instance, in response to the question <em>“Identify if an impact study is needed to develop a campsite”</em>, <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=28:28">GPT-4/English/RAG</a> mentioned the Tourism code. Basically, the provision details that an impact study is needed if stipulated by the Environmental code. While this did not constitute a significant added value, it was interesting that the model referenced the Tourism code. 
+          </p>
+
+          <h4>LLMs can offer valuable guidance beyond just providing an answer</h4>
+
+          <p>
+          For example, in response to <em>“Is it legal to build a house within one kilometer of the coastline?”</em> <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=29:29">GPT-4/French/NoRAG</a> suggested that the user look at spatial planning documents and ask the municipality for a <em>“certificat d’urbanisme”</em> (planning report). These certificates deliver all the information about spatial planning rules, including littoral law which is applicable here, on a specific land. While the response did not answer the question, it offered valuable advice.
+          </p>
+
+          <h4>LLMs can provide interesting insights for broader research</h4>
+
+          <p>
+          To answer the question <em>“Can a cow be considered as real estate?”</em>, <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=30:30">GPT-4/English/RAG</a> incorrectly used Art. R143-2 of the Code rural et des pêches maritimes (Rural and Maritime Fisheries code) and stated that cows cannot be considered as real estate (also mentioned above). It is wrong since the scope of this provision is limited to pre-emptive rights. However, it’s an interesting point to note for someone working on the legal status of cows for instance.
+          </p>
+
+          <h3>Translation issues</h3>
+
+          <p>
+          Translating legal terminology is always challenging. This difficulty arose because terms such as “bylaw,” “decree,” or “order” may not accurately reflect the same concepts as their translated counterparts due to the differences in the legal systems from which they originate. This can lead to confusion. For example, in one response GPT-4 used “Decree” to translate “arrêté ministériel”, but “ministerial order” would be more specific (see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=32:32">GPT-4/English/NoRAG</a>). In addition, French responses often use the verb “stipuler” instead of “disposer”. “Stipuler” should be used only for synallagmatic acts such as contracts (parties undertake reciprocal obligation). To elaborate about law or decree provisions, the appropriate verb is “disposer”. We also observed that responses to French language questions can mix French and English languages, despite prompting the model to respond in French (for example, see: <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?gid=1613204808#gid=1613204808&range=31:31">Llama-2/French/NoRAG</a>). For a more thorough assessment of translation accuracy, responses would need to be evaluated by professional translators, but our preliminary observations suggest that the translation quality is accurate in most cases. 
+          </p>
+
+        </section>
+
+        <hr/>
+
+        <section id="conclusion">
+          <h2>Conclusion</h2>
+
+          <h3>Multilingual RAG for legal AI shows potential</h3>
+
+          <p>
+          We focused on assessing the benefits and limitations of using an off-the-shelf RAG pipeline to explore legal data, with particular attention to its capabilities across the French and English languages and their differing legal systems. Multilingual RAG can improve accessibility to foreign legal texts, although imperfectly. Our pipeline enabled cross-language searching to some degree without requiring translations obtained by users. However, we discovered that while responses often appeared plausible, fluent, and informative, models frequently retrieved irrelevant documents, included citation hallucinations, and contained inaccuracies. 
+          </p>
+
+          <p>
+          Users of legal AI tools must understand the nature of inaccuracies that can arise such as incorrect or misunderstood legal bases, improper scope determination, overlooked or incorrect references to legal texts, overly hasty conclusions, and the failure to account for jurisdiction-specific details. Embeddings can also be a source of inaccuracies as the retrieval of irrelevant legal texts can contribute to noise in responses. Furthermore, the retrieval of irrelevant sources does not imply that no relevant documents exist in the knowledge base. While the use of RAG aims to reduce hallucinations overall, for our particular setup, we found the use of RAG does not necessarily lead to more accurate responses. Intrinsic hallucinations can persist and may even appear more persuasive, amplifying the importance of scrutinizing the embeddings retrieved and referenced within the response itself. 
+          </p>
+
+          <p>
+          Since our experimental setup differs from existing commercial legal AI tools, we avoid making generalizations or comparisons to any commercial products. We hope our findings will encourage the development of interpretable and explainable AI tools that guide users in understanding how they work and verifying sources. While we remain cautiously optimistic about the potential of multilingual RAG for legal AI based on our experimental findings, we urge caution and reflection when using RAG-based tools as information-seeking mechanisms. 
+          </p>
+
+          <h3>Limitations of off-the-shelf RAG without manual optimization</h3>
+
+          <p>
+          Especially for specialized domains such as law where accuracy and context is crucial, addressing the limitations of an off-the-shelf RAG pipeline such as reducing hallucinations and generating highly context-specific results requires significant time and effort for marginal gains. However, these optimizations were outside of the focus and scope of our experiment as we aimed to use as many off-the-shelf components as possible to create an experimental pipeline that makes it easy for others to experiment with “cookie-cutter” RAG as practiced at the time of the experiment. 
+          </p>
+
+          <h3>Impact of legal AI on the research process</h3>
+
+          <p>
+          In the evolving landscape of legal information retrieval, AI tools reshape the legal inquiry process by altering the methods and frameworks through which legal information is accessed and interpreted. An open question remains regarding the impact tools like these may have on how users conduct legal inquiries and reach conclusions. Legal AI tools can potentially alter the traditional processes of legal research, analysis, and decision-making as they may influence which sources are retrieved and consulted, how information is synthesized and presented, and the speed and efficiency with which legal queries are answered. These changes may lead to shifts in legal research strategies and practices. Librarians and legal scholars must also consider what it means that responses to the same question can result in variable and unpredictable responses from models, and we should consider what guardrails need to be in place to support responsible use. Furthermore, AI-assisted search and the integration of AI into the legal inquiry process raises important considerations about the balance between human judgment and AI assistance. 
+          </p>
+
+          <p>
+          Understanding the implications of relying on AI tools for legal inquiries will require further examination of how these tools shape the perspectives and approaches of legal researchers and practitioners. When offloading the task of legal inquiry to AI, we should consider the impact this will have on critical thinking and legal reasoning. The need for traditional legal research skills becomes even more important for verifying AI output. Depending exclusively on the output of AI tools can lead to a loss of context and hinder the development of a deeper understanding of the broader legal information environment that goes beyond superficial learning and discovery. These tools should not replace existing research methods, but should rather be a complementary approach that may enhance the research experience. 
+          </p>
+
+          <h3>How to use legal AI tools efficiently and responsibly?</h3>
+
+          <p>
+          While in some instances AI may save time through efficient search and identification of relevant legal sources within a large corpus, it is essential to recognize the limitations of using an off-the-shelf pipeline. Users may be overwhelmed with contradictory or verbose responses and hallucinations remain a significant risk. While these tools may enhance access and help lower the barrier to entry, users need to weigh the tradeoffs, understanding the inherent variability of AI tools while adjusting their expectations and strategies as they experiment. However, this <a href="https://arxiv.org/abs/2402.11364">process can undercut the potential time savings and efficiency gains offered by AI tools</a>, so each user must determine whether the advantages of using AI outweigh the additional efforts required for responsible use. These issues are not unique to LLMs, since the use of traditional search engines or legal databases may also require time and effort to identify relevant results.
+          </p>
+
+          <h4>Trust calibration: developing instructions for use</h4>
+
+          <p>
+          As these tools are increasingly integrated into legal research and practice, ensuring that users maintain an appropriate level of trust in their capabilities is crucial. When we analyzed the responses from our experiment, it was evident that most responses contained a mixt of true and false elements, with some information falling out of scope. This reflects the model's difficulty in properly determining the scope of legal rules and often results in approximations rather than precise answers.
+          </p>
+
+          <p>
+          Transparent practices, including a clear exposition of how answers are derived, allow users to assess the robustness of the underlying argumentation and reasoning. The process of argumentation to achieve a result is as important as the result itself. For instance, referencing a legal provision should lead to checks to ensure its existence and correct interpretation. This should include validating the provision’s material, geographical, and temporal scope, as well as the accuracy of its quotation. 
+          </p>
+
+          <p>
+          Developing clear guidelines and instructions for using and evaluating these tools is essential. Legal scholars, librarians, and engineers all have a crucial role in the building and evaluation of legal AI tools. By calibrating trust in legal AI tools through experiments such as this and providing criteria for output evaluation, we can promote their careful and responsible adoption. While these tools can be helpful research aids, overestimating the accuracy and reliability of AI-generated responses can lead to significant errors and potentially harmful outcomes. Engaging in ongoing critical reflection of these tools is necessary for trust calibration and assessing effectiveness across different use cases. 
+          </p>
+
+          <h3>When is the use of legal AI tools beneficial?</h3>
+
+          <h4>Comparing utility for legal experts versus legal novices and differentiating between accuracy and usefulness</h4>
+
+          <p>
+          The utility of AI use in legal contexts is not solely contingent on technological capability, but also on how legal researchers engage with it. Legal experts are more likely to know the right questions to ask and have a rough idea of what kind of information they are seeking, enabling them to design more detailed prompts which generate more precise responses. Responses generated by legal AI tools often exhibit logical coherence and topical correctness, creating a facade of credibility. However, checking for hallucinations—false or misleading information embedded within otherwise plausible answers—requires substantial legal knowledge and familiarity with the system. This disparity affects the perceived usefulness of AI tools for different user groups.
+          </p>
+
+          <p>
+          Legal experts are well-equipped to navigate the intricacies of the legal system and can distinguish useful insights even when responses contain inaccuracies. These tools can assist experts by identifying lesser-known legal rules, offering insights that may have been overlooked, and providing valuable perspectives that enrich broader research efforts. For legal novices, however, the situation is more nuanced and potentially problematic. Novices such as American law students unfamiliar with the French civil law system, may find it challenging to verify the AI-generated content due to their limited understanding of the local legal framework. Thus, legal novices must approach these tools with caution. While AI tools can facilitate asking questions in natural language and without requiring precise legal vocabulary or keywords, this ease of use can be a double-edged sword. Novices may pose ambiguous or misleading questions, receiving responses that are "convincingly wrong"—appearing logical and within the topical scope but containing fundamental inaccuracies. Indeed, encountering a convincing hallucination can be highly time-consuming even for experts because, much like in other sciences, proving that something does not exist can be challenging, akin to the Russell’s teapot analogy. Novices risk being misled by invented rules or secondary issues incorrectly highlighted as significant or by irrelevant sources. This not only diminishes the trustworthiness of the AI tool but could potentially discourage its use due to the effort and time required to validate the information.
+          </p>
+
+          <p>
+          Beyond the accuracy of information retrieval, users must also consider the broader social and environmental impact of using legal AI tools. The extensive computing power required to develop, maintain, and operate AI systems has significant <a href="https://hbr.org/2024/07/the-uneven-distribution-of-ais-environmental-impacts">environmental impacts</a>, including increased energy and water consumption, e-waste, and carbon emissions. Additionally, the labor involved in the development and oversight of these systems may sometimes involve <a href="https://theconversation.com/long-hours-and-low-wages-the-human-labour-powering-ais-development-217038">exploitative practices</a>. Therefore, users must weigh the immediate benefits of using these tools against their social and environmental impacts. 
+          </p>
+
+        </section>
+
+        <hr/>
+
+        <section id="future-directions">
+          <h2>Future Directions</h2>
+
+          <p>
+          We welcome feedback and contributions to this experiment and aim to spark cross-cultural, interdisciplinary conversations among librarians, engineers, and legal scholars about the use of RAG-based legal tools. Some areas for further exploration we’ve identified to be undertaken by us or others in the community include: 
+          </p>
+
+          <ul>
+            <li>
+              <strong>Benchmarking</strong>. Rigorous testing and the creation of legal benchmarks are essential for enhancing transparency about the strengths and limitations of legal AI tools. These measures are crucial for the responsible AI use in the legal domain. To support transparency and facilitate benchmarking, Betty developed a <a href="https://docs.google.com/document/d/1e3znEMC6DYAxoE32d8vCtGGvJsOAydFG2-VO-mHnN70/edit?usp=sharing">solutions appendix</a> so that others can test their results against our question set. Further research could involve employing a legal benchmarking dataset and methodology to perform a more extensive, systematic evaluation of Open French Law RAG using real-world legal research questions and across different legal use cases. Another potential avenue for exploration is assessing the different types of legal reasoning that a multilingual RAG pipeline can effectively perform to measure the key elements of “thinking like a lawyer.” This might include assessing the system’s abilities in various aspects of legal reasoning such as issue spotting or rule application as well as use cases requiring a greater degree of legal analysis. To comprehensively evaluate these capabilities, utilizing standardized legal benchmarks is crucial to provide insights.
+            </li>
+            <li>
+              <strong>RAG and fine-tuning</strong>. Both methods can enhance the capabilities of models in specialized domains like law, but each comes with distinct tradeoffs. Training models on legal datasets can allow the models to better grasp the nuances of legal vocabulary and reasoning. Further work could compare fine-tuning and RAG systems across factors such as accuracy and costs.
+            </li>
+            <li>
+              <strong>Exploring other legal jurisdictions and languages</strong>. While the structure of the French legal system provided a favorable environment for experimenting with off-the-shelf RAG for legal information retrieval, expanding this exploration to include other legal systems and languages could provide useful comparative insights about the use of this pipeline in other legal contexts.
+            </li>
+            <li>
+              <strong>Legal-specific LLMs</strong>. LLMs tailored for the legal domain, such as <a href="https://huggingface.co/collections/Equall/saul-7b-a-pioneering-large-language-model-for-law-65e95f89588ff8b178a0cb95">Equall’s Saul-7b</a>, which aim to address the unique challenges of legal text processing, are also a promising path for enhanced performance.
+            </li>
+          </ul>
+        </section>
+
+        <hr/>
+
+        <section id="supplemental-materials">
+          <h2>Supplemental Materials</h2>
+
+          <ul>
+            <li>
+              <a href="https://docs.google.com/spreadsheets/d/1ql6rblht25R4LoXMzVnl63YCUZ3mGyCMdtylnoBUS1A/edit?usp=sharing">Experimental Output Examples Appendix</a> - Includes all examples mentioned in this case study. (Note: We used GPT-4o to translate the retrieved excerpts, so it may contain inaccuracies).
+            </li>
+            <li> 
+              <a href="https://github.com/harvard-lil/open-french-law-rag-pipeline">Pipeline source code on Github</a> 
+            </li>
+            <li>
+              <a href="https://docs.google.com/spreadsheets/d/18iDL2ZTTesebFpXnhshbWbSScIy8oJgJJw6PzM0u5nI/edit?usp=sharing">Raw data</a>
+            </li>
+            <li>
+              <a href="https://docs.google.com/document/d/1e3znEMC6DYAxoE32d8vCtGGvJsOAydFG2-VO-mHnN70/edit?usp=sharing">Solutions Appendix</a> - Includes all answers to the set of ten questions we used in our experiment in both English and French.
+            </li>
+            <li> 
+              <a href="https://docs.google.com/document/d/1cFg4xRu4U1f4iYINagKtTMVsVb7O3nGMJdw-jl0Y6ng/edit?usp=sharing">No RAG source evaluation</a> - Includes evaluation of sources cited in responses for which no excerpts were retrieved.  
+            </li>
+          </ul>
+        </section>
+
+        <hr/>
+
+        <section id="thanks-and-acknowledgements">
+          <h2>Thanks and Acknowledgements</h2>
+
+          <p>
+            <em>First published</em>: January 21st 2025<br>
+            <em>Last edit</em>: January 21st 2025
+          </p>
+
+          <p>
+            <a href="https://labs.google/fx/tools/image-fx/0rt6s0tme0000">Illustration generated via Imagen 3</a> with the following prompt: Llama dressed in a French lawyer robe (avocat) abstract. Seed: 351141.
+          </p>
+
+          <p>The authors would like to thank:</p>
+
+          <ul>
+            <li>Ben Steinberg, DevOps (Harvard Law School Library Innovation Lab)</li>
+            <li>Rebecca Cremona, Software Engineer (Harvard Law School Library Innovation Lab)</li>
+            <li>Professor Benjamin Eidelson (Harvard Law School)</li>
+            <li>Maxwell Neely-Cohen, Editor (Harvard Law School Library Innovation Lab)</li>
+            <li>Varun Magesh, Researcher (Stanford RegLab)</li>
+            <li>Ronan Robert (UBO - Brest, France)</li>
+            <li>Professor Valère Ndior (UBO - Brest, France)</li>
+            <li>Marie Bonnin, Researcher (IRD - IUEM - LEMAR - Plouzané, France)</li>
+          </ul>
+        </section>
+      </div>
+
+    </main>
+
+  </body>
+</html>
