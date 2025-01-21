@@ -78,7 +78,7 @@ Our key takeaways focused on the questions: _“How can legal AI tools be used e
 
 We welcome feedback and contributions to this experiment and aim to spark cross-cultural, interdisciplinary conversations among librarians, engineers, and legal scholars about the use of RAG-based legal tools.
 
-If you’re interested in learning more, you can find detailed examples, analyses, and a thorough discussion of our experiment and findings in our case study. **[Explore the case study](https://lil.law.harvard.edu/open-french-law-rag)**. 
+If you’re interested in learning more, you can find detailed examples, analyses, and a thorough discussion of our experiment and findings in our case study. **[Explore the case study](/open-french-law-rag)**. 
 
 ---
 
