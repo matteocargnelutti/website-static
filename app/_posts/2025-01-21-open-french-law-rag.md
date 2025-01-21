@@ -56,13 +56,15 @@ We analyzed the output for source relevance and accuracy, logical coherence, fac
 
 With our particular experimental setup and analysis criteria, we identified the following trends in our study: 
 
-- **Performance Comparison: English vs. French**
-    - English questions showed slightly better performance compared to French questions, although RAG helped mitigate this difference. Both models performed better in English than in French. 
-- **Impact of RAG**
-    - While the use of RAG enhanced the accuracy and relevancy of some responses, it also introduced additional complexity and potential for errors.
-    - Incorporating RAG improved the system’s performance in both English and French.
-- **Accuracy and Relevancy**
-    - We observed the prevalence of partially inaccurate responses that mix true and false statements, along with different types of inaccuracies. We observed that errors in responses often arose from the model’s inability to properly determine material, geographical and temporal scope of rules. This is a significant limitation because it is a core skill of lawyers. In addition, the retrieval of irrelevant embeddings also introduced inaccuracies.
+**Performance Comparison: English vs. French**
+- English questions showed slightly better performance compared to French questions, although RAG helped mitigate this difference. Both models performed better in English than in French. 
+
+**Impact of RAG**
+- While the use of RAG enhanced the accuracy and relevancy of some responses, it also introduced additional complexity and potential for errors.
+- Incorporating RAG improved the system’s performance in both English and French.
+
+**Accuracy and Relevancy**
+- We observed the prevalence of partially inaccurate responses that mix true and false statements, along with different types of inaccuracies. We observed that errors in responses often arose from the model’s inability to properly determine material, geographical and temporal scope of rules. This is a significant limitation because it is a core skill of lawyers. In addition, the retrieval of irrelevant embeddings also introduced inaccuracies.
 
 While our findings are interesting, we recognize the limitations in our experimental scope and evaluation. Interpreting these results requires caution in drawing broad conclusions about the generalizability and robustness of our data. 
 
