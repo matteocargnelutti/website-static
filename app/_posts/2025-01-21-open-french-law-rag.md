@@ -7,11 +7,11 @@ tags:
 ---
 
 
-<a href="https://lil.law.harvard.edu/open-french-law-rag"><img src="https://lil-blog-media.s3.amazonaws.com/oflr-1400.jpg" alt="Open French Law RAG Case Study"/></a>
+<a href="/open-french-law-rag"><img src="https://lil-blog-media.s3.amazonaws.com/oflr-1400.jpg" alt="Open French Law RAG Case Study"/></a>
 
 Imagine that you are an English speaker visiting France, engaged in discussion with a French local about a legal issue, but you are a novice French speaker and not familiar with the French legal system. Fortunately, you have a laptop containing over 800,000 French law articles, where the answer to your question may be found. You also have access to open-source software and a multilingual large language model, capable of reading these legal documents and answering questions about them in English. Could a tool like this help you overcome both language and knowledge barriers when exploring large collections of information? How might LLMs help people access and understand legal information that is either in a foreign language or requires specialized knowledge? 
 
-We built the Open French Law Retrieval Augmented Generation (RAG) pipeline as part of [a case study](https://lil.law.harvard.edu/open-french-law-rag) in which we explored how French law could be more accessible to non-French speakers. By experimenting with an off-the-shelf pipeline that combines LLMs with multilingual [Retrieval Augmented Generation](https://scriv.ai/guides/retrieval-augmented-generation-overview/) techniques, we aimed to investigate how such a tool might help non-French speakers of varying expertise ask questions in English to explore French law. 
+We built the Open French Law Retrieval Augmented Generation (RAG) pipeline as part of [a case study](/open-french-law-rag) in which we explored how French law could be more accessible to non-French speakers. By experimenting with an off-the-shelf pipeline that combines LLMs with multilingual [Retrieval Augmented Generation](https://scriv.ai/guides/retrieval-augmented-generation-overview/) techniques, we aimed to investigate how such a tool might help non-French speakers of varying expertise ask questions in English to explore French law. 
 
 In the French civil law system, the emphasis is primarily on statutes—many of which are codified—rather than on case law which does not constitute binding precedents. This framework provided a favorable environment for experimenting with the RAG approach for legal information retrieval as it allows for the integration of structured information. 
 
@@ -80,7 +80,7 @@ Our key takeaways focused on the questions: _“How can legal AI tools be used e
 
 We welcome feedback and contributions to this experiment and aim to spark cross-cultural, interdisciplinary conversations among librarians, engineers, and legal scholars about the use of RAG-based legal tools.
 
-If you’re interested in learning more, you can find detailed examples, analyses, and a thorough discussion of our experiment and findings in our case study. **[Explore the case study](https://lil.law.harvard.edu/open-french-law-rag)**. 
+If you’re interested in learning more, you can find detailed examples, analyses, and a thorough discussion of our experiment and findings in our case study. **[Explore the case study](/open-french-law-rag)**. 
 
 ---
 
