@@ -10,7 +10,7 @@ banner_large: i-xray-banner-lrg.png
 **Time:** 12:15 pm - 1:15 pm<br />
 **Lunch will be provided**<br />
 **Open to the Harvard community**<br />
-**We are committed to events that are equally accessible to all.** Anyone with a disability who would like to request accommodations or who has questions about physical access may contact an Event Specialist at events@cyber.harvard.edu in advance of your visit.
+**We are committed to events that are equally accessible to all.** Anyone with a disability who would like to request accommodations or who has questions about physical access may contact an Event Specialist at [events@cyber.harvard.edu](mailto:events@cyber.harvard.edu) in advance of your visit.
 
 **Please <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIkFzZcRi1pOsEDAZHXLebvZry3VbRoFmW27aDiAHdnrF07g/viewform?usp=header">RSVP</a>.**
 
