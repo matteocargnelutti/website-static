@@ -15,5 +15,10 @@
   order: 
   no-swup: true
 
+- title: Open French Law RAG
+  url: /open-french-law-rag/
+  subcategory: AI Explorations
+  order: 
+  no-swup: true
 
 
